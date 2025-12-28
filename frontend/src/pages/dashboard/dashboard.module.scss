@@ -1,0 +1,21 @@
+// ===================
+// © AngelaMos | 2025
+// dashboard.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: $bg-default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  color: $text-default;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-medium;
+  letter-spacing: $tracking-wide;
+}

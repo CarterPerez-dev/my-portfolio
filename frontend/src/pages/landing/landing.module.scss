@@ -1,0 +1,24 @@
+// ===================
+// © AngelaMos | 2025
+// landing.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  @include flex-column-center;
+  background-color: $bg-default;
+  background-image: radial-gradient(
+    circle,
+    $bg-page 1px,
+    transparent 1px
+  );
+  background-size: 19px 19px;
+  padding: $space-8;
+}
+
+.tmp {
+  color: $text-default;
+}
