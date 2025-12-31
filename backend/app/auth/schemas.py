@@ -8,10 +8,7 @@ from pydantic import (
     EmailStr,
 )
 
-from config import (
-    PASSWORD_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH,
-)
+import config
 from core.base_schema import BaseSchema
 from user.schemas import UserResponse
 
@@ -22,8 +19,8 @@ class LoginRequest(BaseSchema):
     """
     email: EmailStr
     password: str = Field(
-        min_length = PASSWORD_MIN_LENGTH,
-        max_length = PASSWORD_MAX_LENGTH
+        min_length = config.PASSWORD_MIN_LENGTH,
+        max_length = config.PASSWORD_MAX_LENGTH
     )
 
 
@@ -62,8 +59,8 @@ class PasswordResetConfirm(BaseSchema):
     """
     token: str
     new_password: str = Field(
-        min_length = PASSWORD_MIN_LENGTH,
-        max_length = PASSWORD_MAX_LENGTH
+        min_length = config.PASSWORD_MIN_LENGTH,
+        max_length = config.PASSWORD_MAX_LENGTH
     )
 
 
@@ -73,6 +70,6 @@ class PasswordChange(BaseSchema):
     """
     current_password: str
     new_password: str = Field(
-        min_length = PASSWORD_MIN_LENGTH,
-        max_length = PASSWORD_MAX_LENGTH
+        min_length = config.PASSWORD_MIN_LENGTH,
+        max_length = config.PASSWORD_MAX_LENGTH
     )

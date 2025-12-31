@@ -1,0 +1,103 @@
+{
+  "common": {
+    "search": "Search",
+    "searchPlaceholder": "Search...",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "notFound": "Not found",
+    "goBack": "Go back",
+    "previous": "Previous",
+    "next": "Next",
+    "viewAll": "View all",
+    "readMore": "Read more",
+    "externalLink": "Opens in new tab"
+  },
+  "nav": {
+    "gettingStarted": "Getting Started",
+    "overview": "Overview",
+    "quickStart": "Quick Start",
+    "projects": "Projects",
+    "background": "Background",
+    "experience": "Experience",
+    "certifications": "Certifications",
+    "writing": "Writing",
+    "onThisPage": "ON THIS PAGE"
+  },
+  "version": {
+    "stable": "stable",
+    "latest": "latest",
+    "github": "GitHub",
+    "resume": "Resume",
+    "contact": "Contact"
+  },
+  "search": {
+    "title": "Search Results",
+    "found": "Search finished, found {{count}} page matching the search query.",
+    "found_plural": "Search finished, found {{count}} pages matching the search query.",
+    "noResults": "No results found for \"{{query}}\"",
+    "tryAgain": "Try a different search term"
+  },
+  "overview": {
+    "title": "Overview",
+    "projects": "PROJECTS",
+    "commits": "COMMITS",
+    "certs": "CERTS"
+  },
+  "quickStart": {
+    "title": "Quick Start",
+    "description": "Quick links to get in touch and learn more"
+  },
+  "projects": {
+    "title": "Projects",
+    "technicalDetails": "Technical Details",
+    "techStack": "Tech Stack",
+    "featuredSnippet": "Featured Snippet",
+    "links": "Links",
+    "viewSource": "View Source",
+    "liveDemo": "Live Demo",
+    "documentation": "Documentation",
+    "status": {
+      "active": "Active",
+      "maintained": "Maintained",
+      "archived": "Archived",
+      "deprecated": "Deprecated"
+    }
+  },
+  "experience": {
+    "title": "Experience",
+    "present": "Present",
+    "employmentType": {
+      "full_time": "Full-time",
+      "part_time": "Part-time",
+      "contract": "Contract",
+      "freelance": "Freelance",
+      "internship": "Internship"
+    }
+  },
+  "certifications": {
+    "title": "Certifications",
+    "total": "certifications",
+    "obtained": "Obtained",
+    "expires": "Expires",
+    "expired": "Expired",
+    "noExpiry": "No expiry",
+    "verify": "Verify",
+    "category": {
+      "security": "Security",
+      "cloud": "Cloud",
+      "programming": "Programming",
+      "networking": "Networking",
+      "database": "Database",
+      "devops": "DevOps"
+    }
+  },
+  "errors": {
+    "pageNotFound": "Page not found",
+    "pageNotFoundDesc": "The page you're looking for doesn't exist or has been moved.",
+    "projectNotFound": "Project not found",
+    "experienceNotFound": "Experience data not found",
+    "certificationsNotFound": "Certifications not found",
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Try again"
+  }
+}

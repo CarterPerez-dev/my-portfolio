@@ -1,0 +1,62 @@
+[
+  {
+    "language": "zh",
+    "title": "以质量为核心构建定制解决方案",
+    "description": "一位系统集成技术员在SealingTech的历程，从硬件选型到ISO 9001质量保证，精准构建定制化国防系统。",
+    "external_url": "https://www.sealingtech.com/2024/10/03/building-custom-solutions-with-quality-at-the-core/",
+    "category": "project",
+    "tags": ["sealing-tech", "cybersecurity"],
+    "thumbnail_url": null,
+    "published_date": "2024-10-03",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "zh",
+    "title": "我的职业成长如何提升客户体验",
+    "description": "CompTIA认证和实践项目如何改变了我在SealingTech的问题解决方法并提升了客户体验。",
+    "external_url": "https://www.sealingtech.com/2025/02/03/how-my-career-growth-led-to-enhancing-customer-experience/",
+    "category": "career",
+    "tags": ["sealing-tech", "cybersecurity"],
+    "thumbnail_url": null,
+    "published_date": "2025-02-03",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "zh",
+    "title": "一次通过CompTIA Security+考试的十大技巧",
+    "description": "首次通过CompTIA Security+认证考试的核心技巧和策略，从学习方法到时间管理。",
+    "external_url": "https://certgames.com/blog/comptia-security-plus-exam-tips",
+    "category": "tutorial",
+    "tags": ["cybersecurity", "comptia"],
+    "thumbnail_url": null,
+    "published_date": "2024-12-05",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "zh",
+    "title": "解锁你的学习超能力：游戏化学习的科学与艺术",
+    "description": "利用游戏化的力量将学习从枯燥变成精彩探索——掌握让知识真正留存的心理学原理和实用策略。",
+    "external_url": "https://medium.com/@carterperez88/unlocking-your-learning-superpowers-the-science-art-of-gamifying-your-studies-and-why-your-2d55338141f9",
+    "category": "deep_dive",
+    "tags": ["learning", "gamified"],
+    "thumbnail_url": null,
+    "published_date": "2025-05-30",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  }
+]

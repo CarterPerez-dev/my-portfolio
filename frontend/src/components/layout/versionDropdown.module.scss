@@ -1,0 +1,101 @@
+// ===================
+// © AngelaMos | 2025
+// versionDropdown.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.dropdown {
+  position: relative;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  background: $bg-surface-75;
+  border: 1px solid $border-default;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  @include transition-fast;
+
+  @include hover {
+    background: $bg-surface-100;
+    border-color: $border-strong;
+  }
+}
+
+.docIcon {
+  width: 16px;
+  height: 16px;
+  color: $text-muted;
+  flex-shrink: 0;
+}
+
+.branchIcon {
+  width: 14px;
+  height: 14px;
+  color: $text-lighter;
+  flex-shrink: 0;
+}
+
+.label {
+  color: $accent;
+  font-weight: $font-weight-medium;
+}
+
+.chevron {
+  width: 12px;
+  height: 12px;
+  color: $text-muted;
+  transition: transform $duration-fast $ease-out;
+  flex-shrink: 0;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.menu {
+  position: absolute;
+  bottom: calc(100% + $space-2);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: $bg-surface-200;
+  border: 1px solid $border-default;
+  border-radius: $radius-sm;
+  z-index: $z-dropdown;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  color: $text-light;
+  text-decoration: none;
+  @include transition-fast;
+
+  @include hover {
+    color: $text-default;
+    background: $bg-surface-300;
+  }
+
+  &:first-child {
+    border-radius: $radius-sm $radius-sm 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 $radius-sm $radius-sm;
+  }
+}
+
+.external {
+  font-size: $font-size-xs;
+  color: $text-muted;
+}

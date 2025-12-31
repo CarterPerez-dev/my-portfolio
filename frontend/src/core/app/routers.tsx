@@ -5,12 +5,35 @@
 
 import { createBrowserRouter, type RouteObject } from 'react-router-dom'
 import { ROUTES } from '@/config'
+import {
+  Certifications,
+  Experience,
+  Overview,
+  ProjectDetail,
+  SearchResults,
+} from '@/pages/docs'
 import { ProtectedRoute } from './protected-route'
 
 const routes: RouteObject[] = [
   {
     path: ROUTES.HOME,
-    lazy: () => import('@/pages/landing'),
+    element: <Overview />,
+  },
+  {
+    path: `${ROUTES.PROJECTS.INDEX}/:slug`,
+    element: <ProjectDetail />,
+  },
+  {
+    path: ROUTES.BACKGROUND.EXPERIENCE,
+    element: <Experience />,
+  },
+  {
+    path: ROUTES.BACKGROUND.CERTIFICATIONS,
+    element: <Certifications />,
+  },
+  {
+    path: ROUTES.SEARCH,
+    element: <SearchResults />,
   },
   {
     path: ROUTES.LOGIN,
@@ -31,11 +54,11 @@ const routes: RouteObject[] = [
   },
   {
     path: ROUTES.UNAUTHORIZED,
-    lazy: () => import('@/pages/landing'),
+    element: <Overview />,
   },
   {
     path: '*',
-    lazy: () => import('@/pages/landing'),
+    element: <Overview />,
   },
 ]
 

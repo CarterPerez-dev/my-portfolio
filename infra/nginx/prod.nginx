@@ -1,6 +1,7 @@
 # =============================================================================
 # AngelaMos | 2025
 # prod.nginx
+# Production server with Prometheus metrics via Lua
 # =============================================================================
 
 server {
@@ -8,15 +9,14 @@ server {
     listen [::]:80;
     server_name _;
 
-    root /usr/share/nginx/html;
+    root /usr/local/openresty/nginx/html;
     index index.html;
 
-    access_log /var/log/nginx/access.log main_timed buffer=32k flush=5s;
-    error_log /var/log/nginx/error.log warn;
+    access_log /usr/local/openresty/nginx/logs/access.log main_timed buffer=32k flush=5s;
+    error_log /usr/local/openresty/nginx/logs/error.log warn;
 
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
-    add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
 
@@ -24,6 +24,23 @@ server {
         access_log off;
         return 200 "healthy\n";
         add_header Content-Type text/plain;
+    }
+
+    location /metrics {
+        access_log off;
+        allow 10.0.0.0/8;
+        allow 172.16.0.0/12;
+        allow 192.168.0.0/16;
+        allow 127.0.0.1;
+        deny all;
+
+        content_by_lua_block {
+            metric_connections:set(ngx.var.connections_reading, {"reading"})
+            metric_connections:set(ngx.var.connections_waiting, {"waiting"})
+            metric_connections:set(ngx.var.connections_writing, {"writing"})
+            metric_connections:set(ngx.var.connections_active, {"active"})
+            prometheus:collect()
+        }
     }
 
     location /api/ {
@@ -63,7 +80,6 @@ server {
         proxy_buffering off;
     }
 
-    # Static assets - aggressive caching (hashed filenames)
     location /assets/ {
         expires 1y;
         add_header Cache-Control "public, immutable";
@@ -77,13 +93,11 @@ server {
         access_log off;
     }
 
-    # SPA fallback - index.html should never be cached
     location / {
         add_header Cache-Control "no-cache, must-revalidate";
         try_files $uri $uri/ /index.html;
     }
 
-    # Deny access to hidden files
     location ~ /\. {
         deny all;
         access_log off;

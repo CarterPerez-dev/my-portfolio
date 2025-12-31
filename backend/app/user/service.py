@@ -44,8 +44,7 @@ class UserService:
         """
         Register a new user
         """
-        if await UserRepository.email_exists(self.session,
-                                             user_data.email):
+        if await UserRepository.email_exists(self.session, user_data.email):
             raise EmailAlreadyExists(user_data.email)
 
         role = UserRole.USER
@@ -162,8 +161,7 @@ class UserService:
         """
         Admin creates a new user
         """
-        if await UserRepository.email_exists(self.session,
-                                             user_data.email):
+        if await UserRepository.email_exists(self.session, user_data.email):
             raise EmailAlreadyExists(user_data.email)
 
         hashed = await hash_password(user_data.password)

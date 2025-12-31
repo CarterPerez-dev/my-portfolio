@@ -26,6 +26,18 @@ from core.constants import (
     BLOG_CATEGORY_MAX_LENGTH,
     BLOG_DESCRIPTION_MAX_LENGTH,
     BLOG_TITLE_MAX_LENGTH,
+    CACHE_NS_BLOGS,
+    CACHE_NS_CERTIFICATIONS,
+    CACHE_NS_EXPERIENCES,
+    CACHE_NS_GITHUB,
+    CACHE_NS_PROJECTS,
+    CACHE_PREFIX,
+    CACHE_TTL_BLOGS,
+    CACHE_TTL_CERTIFICATIONS,
+    CACHE_TTL_EXPERIENCES,
+    CACHE_TTL_GITHUB,
+    CACHE_TTL_PROJECTS,
+    CACHE_VERSION,
     CERTIFICATION_CATEGORY_MAX_LENGTH,
     CERTIFICATION_CREDENTIAL_ID_MAX_LENGTH,
     CERTIFICATION_ISSUER_MAX_LENGTH,
@@ -45,6 +57,8 @@ from core.constants import (
     PAGINATION_DEFAULT_LIMIT,
     PAGINATION_DEFAULT_SKIP,
     PAGINATION_FEATURED_LIMIT,
+    PAGINATION_FEATURED_MAX_LIMIT,
+    PAGINATION_MAX_LIMIT,
     PASSWORD_HASH_MAX_LENGTH,
     PASSWORD_MAX_LENGTH,
     PASSWORD_MIN_LENGTH,
@@ -79,12 +93,22 @@ __all__ = [
     "BLOG_CATEGORY_MAX_LENGTH",
     "BLOG_DESCRIPTION_MAX_LENGTH",
     "BLOG_TITLE_MAX_LENGTH",
-    "BlogCategory",
+    "CACHE_NS_BLOGS",
+    "CACHE_NS_CERTIFICATIONS",
+    "CACHE_NS_EXPERIENCES",
+    "CACHE_NS_GITHUB",
+    "CACHE_NS_PROJECTS",
+    "CACHE_PREFIX",
+    "CACHE_TTL_BLOGS",
+    "CACHE_TTL_CERTIFICATIONS",
+    "CACHE_TTL_EXPERIENCES",
+    "CACHE_TTL_GITHUB",
+    "CACHE_TTL_PROJECTS",
+    "CACHE_VERSION",
     "CERTIFICATION_CATEGORY_MAX_LENGTH",
     "CERTIFICATION_CREDENTIAL_ID_MAX_LENGTH",
     "CERTIFICATION_ISSUER_MAX_LENGTH",
     "CERTIFICATION_NAME_MAX_LENGTH",
-    "CertificationCategory",
     "DEFAULT_DISPLAY_ORDER",
     "DEVICE_ID_MAX_LENGTH",
     "DEVICE_NAME_MAX_LENGTH",
@@ -94,16 +118,14 @@ __all__ = [
     "EXPERIENCE_EMPLOYMENT_TYPE_MAX_LENGTH",
     "EXPERIENCE_LOCATION_MAX_LENGTH",
     "EXPERIENCE_ROLE_MAX_LENGTH",
-    "EmploymentType",
-    "Environment",
     "FULL_NAME_MAX_LENGTH",
-    "HealthStatus",
     "IP_ADDRESS_MAX_LENGTH",
     "LANGUAGE_CODE_MAX_LENGTH",
-    "Language",
     "PAGINATION_DEFAULT_LIMIT",
     "PAGINATION_DEFAULT_SKIP",
     "PAGINATION_FEATURED_LIMIT",
+    "PAGINATION_FEATURED_MAX_LIMIT",
+    "PAGINATION_MAX_LIMIT",
     "PASSWORD_HASH_MAX_LENGTH",
     "PASSWORD_MAX_LENGTH",
     "PASSWORD_MIN_LENGTH",
@@ -114,13 +136,19 @@ __all__ = [
     "PROJECT_STATUS_MAX_LENGTH",
     "PROJECT_SUBTITLE_MAX_LENGTH",
     "PROJECT_TITLE_MAX_LENGTH",
+    "TAG_MAX_LENGTH",
+    "TOKEN_HASH_LENGTH",
+    "URL_MAX_LENGTH",
+    "BlogCategory",
+    "CertificationCategory",
+    "EmploymentType",
+    "Environment",
+    "HealthStatus",
+    "Language",
     "ProjectStatus",
     "SafeEnum",
     "Settings",
-    "TAG_MAX_LENGTH",
-    "TOKEN_HASH_LENGTH",
     "TokenType",
-    "URL_MAX_LENGTH",
     "UserRole",
     "get_settings",
     "settings",
@@ -174,8 +202,8 @@ class Settings(BaseSettings):
 
     CORS_ORIGINS: list[str] = [
         "http://localhost",
-        "http://localhost:3420",
-        "http://localhost:8420",
+        "http://localhost:3421",
+        "http://localhost:8421",
     ]
     CORS_ALLOW_CREDENTIALS: bool = True
     CORS_ALLOW_METHODS: list[str] = [
@@ -194,11 +222,7 @@ class Settings(BaseSettings):
     PAGINATION_DEFAULT_SIZE: int = Field(default = 20, ge = 1, le = 100)
     PAGINATION_MAX_SIZE: int = Field(default = 100, ge = 1, le = 500)
 
-    LOG_LEVEL: Literal["DEBUG",
-                       "INFO",
-                       "WARNING",
-                       "ERROR",
-                       "CRITICAL"] = "INFO"
+    LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
     LOG_JSON_FORMAT: bool = True
 
     @model_validator(mode = "after")
@@ -210,9 +234,7 @@ class Settings(BaseSettings):
             if self.DEBUG:
                 raise ValueError("DEBUG must be False in production")
             if self.CORS_ORIGINS == ["*"]:
-                raise ValueError(
-                    "CORS_ORIGINS cannot be ['*'] in production"
-                )
+                raise ValueError("CORS_ORIGINS cannot be ['*'] in production")
         return self
 
 

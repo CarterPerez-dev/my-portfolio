@@ -1,0 +1,100 @@
+{
+  "common": {
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar...",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "notFound": "No encontrado",
+    "goBack": "Volver",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "viewAll": "Ver todo",
+    "readMore": "Leer más",
+    "externalLink": "Abre en nueva pestaña"
+  },
+  "nav": {
+    "gettingStarted": "Primeros Pasos",
+    "overview": "Descripción General",
+    "quickStart": "Inicio Rápido",
+    "projects": "Proyectos",
+    "background": "Trayectoria",
+    "experience": "Experiencia",
+    "certifications": "Certificaciones",
+    "writing": "Escritos",
+    "onThisPage": "EN ESTA PÁGINA"
+  },
+  "version": {
+    "stable": "estable",
+    "latest": "última",
+    "github": "GitHub",
+    "resume": "Currículum",
+    "contact": "Contacto"
+  },
+  "search": {
+    "title": "Resultados de Búsqueda",
+    "found": "Búsqueda completada, se encontró {{count}} página.",
+    "found_plural": "Búsqueda completada, se encontraron {{count}} páginas.",
+    "noResults": "No se encontraron resultados para \"{{query}}\"",
+    "tryAgain": "Prueba con otro término de búsqueda"
+  },
+  "overview": {
+    "title": "Descripción General",
+    "badges": {
+      "projects": "PROYECTOS",
+      "commits": "COMMITS",
+      "certs": "CERTS"
+    }
+  },
+  "quickStart": {
+    "title": "Inicio Rápido",
+    "description": "Enlaces rápidos para contactar y saber más"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "technicalDetails": "Detalles Técnicos",
+    "techStack": "Stack Tecnológico",
+    "links": "Enlaces",
+    "viewSource": "Ver Código",
+    "liveDemo": "Demo en Vivo",
+    "documentation": "Documentación",
+    "status": {
+      "active": "Activo",
+      "maintained": "En Mantenimiento",
+      "archived": "Archivado",
+      "deprecated": "Obsoleto"
+    }
+  },
+  "experience": {
+    "title": "Experiencia",
+    "present": "Presente",
+    "employmentType": {
+      "full_time": "Tiempo Completo",
+      "part_time": "Medio Tiempo",
+      "contract": "Contrato",
+      "freelance": "Freelance",
+      "internship": "Pasantía"
+    }
+  },
+  "certifications": {
+    "title": "Certificaciones",
+    "obtained": "Obtenido",
+    "expires": "Expira",
+    "expired": "Expirado",
+    "noExpiry": "Sin expiración",
+    "verify": "Verificar",
+    "category": {
+      "security": "Seguridad",
+      "cloud": "Nube",
+      "programming": "Programación",
+      "networking": "Redes",
+      "database": "Base de Datos",
+      "devops": "DevOps"
+    }
+  },
+  "errors": {
+    "pageNotFound": "Página no encontrada",
+    "pageNotFoundDesc": "La página que buscas no existe o ha sido movida.",
+    "somethingWentWrong": "Algo salió mal",
+    "tryAgain": "Intentar de nuevo"
+  }
+}

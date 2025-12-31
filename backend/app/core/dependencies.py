@@ -13,8 +13,8 @@ from fastapi import Depends, Request
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
+import config
 from config import (
-    API_PREFIX,
     TokenType,
     UserRole,
 )
@@ -32,12 +32,12 @@ from user.repository import UserRepository
 
 
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl = f"{API_PREFIX}/auth/login",
+    tokenUrl = f"{config.API_PREFIX}/auth/login",
     auto_error = True,
 )
 
 oauth2_scheme_optional = OAuth2PasswordBearer(
-    tokenUrl = f"{API_PREFIX}/auth/login",
+    tokenUrl = f"{config.API_PREFIX}/auth/login",
     auto_error = False,
 )
 
@@ -144,3 +144,15 @@ def get_client_ip(request: Request) -> str:
 
 
 ClientIP = Annotated[str, Depends(get_client_ip)]
+
+
+def get_language(
+    lang: config.Language = config.Language.ENGLISH,
+) -> config.Language:
+    """
+    Extract language from query parameter with English default.
+    """
+    return lang
+
+
+QueryLanguage = Annotated[config.Language, Depends(get_language)]

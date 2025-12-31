@@ -247,6 +247,38 @@ clean-templates:
     @rm -rf docs/templates && echo "Removed docs/templates/"
 
 # =============================================================================
+# Seed Data Tools
+# =============================================================================
+
+[group('seed')]
+db-lint *ARGS:
+    cd data/tools && luajit lint.lua {{ARGS}}
+
+[group('seed')]
+db-lint-file file:
+    cd data/tools && luajit lint.lua --file {{file}}
+
+[group('seed')]
+db-seed *ARGS:
+    cd backend && uv run python ../data/tools/seed.py --local {{ARGS}}
+
+[group('seed')]
+db-seed-dry *ARGS:
+    cd backend && uv run python ../data/tools/seed.py --local --dry-run {{ARGS}}
+
+[group('seed')]
+db-seed-clear *ARGS:
+    cd backend && uv run python ../data/tools/seed.py --local --clear {{ARGS}}
+
+[group('seed')]
+md2json file:
+    cd data/tools && luajit escape.lua {{file}}
+
+[group('seed')]
+md2clip file:
+    cd data/tools && luajit escape.lua {{file}} --clip
+
+# =============================================================================
 # Utilities
 # =============================================================================
 

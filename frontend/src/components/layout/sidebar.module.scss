@@ -1,0 +1,177 @@
+// ===================
+// © AngelaMos | 2025
+// sidebar.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: $sidebar-width;
+  height: 100vh;
+  height: 100dvh;
+  padding: $space-6 $space-4;
+  background-color: $bg-alternative;
+  background-image: radial-gradient(
+    circle,
+    $bg-sidebar 1px,
+    transparent 1px
+  );
+  background-size: 17px 17px;
+  border-right: 1px solid $border-muted;
+  overflow-y: auto;
+  z-index: $z-modal;
+  transition: transform $duration-slow $ease-out;
+
+  @include breakpoint-down('lg') {
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-6;
+}
+
+.photo {
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-full;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-default;
+  line-height: $line-height-tight;
+  @include truncate;
+}
+
+.version {
+  font-size: $font-size-sm;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  color: $text-lighter;
+  line-height: $line-height-normal;
+}
+
+.apiLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $font-size-xs;
+  color: $text-lighter;
+  text-decoration: none;
+  @include transition-fast;
+
+  @include hover {
+    color: $accent;
+  }
+}
+
+.apiArrow {
+  font-size: 10px;
+  transform: rotate(-45deg);
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  margin-top: $space-4;
+}
+
+.navItemPrimary {
+  display: block;
+  padding: $space-2 $space-3;
+  margin-bottom: $space-2;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-light;
+  text-decoration: none;
+  border-radius: $radius-sm;
+  @include transition-fast;
+
+  @include hover {
+    color: $text-default;
+    background: $bg-surface-75;
+  }
+
+  &:global(.active) {
+    color: $accent;
+    background: $accent-muted;
+  }
+}
+
+.navItem {
+  display: block;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  color: $text-light;
+  text-decoration: none;
+  border-radius: $radius-sm;
+  @include transition-fast;
+
+  @include hover {
+    color: $text-default;
+    background: $bg-surface-75;
+  }
+
+  &:global(.active) {
+    color: $accent;
+    background: $accent-muted;
+  }
+}
+
+.navItemExternal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  color: $text-light;
+  text-decoration: none;
+  border-radius: $radius-sm;
+  @include transition-fast;
+
+  @include hover {
+    color: $text-default;
+    background: $bg-surface-75;
+  }
+}
+
+.externalIcon {
+  font-size: $font-size-xs;
+  color: $text-lighter;
+  transform: rotate(-45deg);
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: $space-4;
+  border-top: 1px solid $border-muted;
+}

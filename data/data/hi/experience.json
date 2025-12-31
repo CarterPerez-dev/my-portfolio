@@ -1,0 +1,74 @@
+[
+  {
+    "language": "hi",
+    "company": "Cyber Skyline",
+    "company_url": "https://cyberskyline.com",
+    "company_logo_url": null,
+    "location": "रिमोट",
+    "role": "सॉफ्टवेयर इंजीनियर",
+    "department": "बैकएंड",
+    "employment_type": "full_time",
+    "start_date": "2025-05-01",
+    "end_date": null,
+    "is_current": true,
+    "description": "CISA की वार्षिक President's Cup CTF Competition प्लेटफॉर्म के लिए बैकएंड इंजीनियर। 7 लोगों की टीम में शामिल होकर प्राथमिक बैकएंड योगदानकर्ता बना, स्कोरिंग इंजन, रियल-टाइम नोटिफिकेशन सिस्टम, सपोर्ट टिकटिंग, और टीम/इवेंट मैनेजमेंट सहित कोर कॉम्पिटिशन इंफ्रास्ट्रक्चर बनाया।\n\n## मल्टी-कंटेनर समस्या\n\nप्लेटफॉर्म Docker Swarm पर लोड बैलेंसर के पीछे कई Flask कंटेनर चलाता है। इस सेटअप में स्टैंडर्ड WebSocket इम्प्लीमेंटेशन टूट जाते हैं क्योंकि Flask-SocketIO के rooms प्रति प्रोसेस इन-मेमोरी होते हैं। अगर कोई यूजर कंटेनर 1 से कनेक्ट है और स्कोर अपडेट कंटेनर 3 पर होता है, तो उस यूजर को कभी नोटिफिकेशन नहीं मिलती। हर रियल-टाइम फीचर को एक ऐसे समाधान की जरूरत थी जो कंटेनर बाउंड्रीज के पार काम करे।\n\n## Redis Pub/Sub कोऑर्डिनेशन\n\nसमाधान: हर कंटेनर अपनी लुकअप टेबल मेंटेन करता है जो यूजर IDs को socket session IDs से मैप करती है। जब नोटिफिकेशन फायर होती है, यह Redis channel पर पब्लिश होती है। हर कंटेनर मैसेज रिसीव करता है, चेक करता है \"क्या यह यूजर मुझसे कनेक्टेड है?\", और सिर्फ तभी emit करता है जब उनके पास एक्टिव कनेक्शन हो। कोई वेस्टेड ब्रॉडकास्ट नहीं, कोई क्रॉस कंटेनर room मैनेजमेंट नहीं।\n\n```python\ndef _handle_notification_message(self, message):\n    user_ids = message.get('user_ids', [])\n    event_name = message.get('event_name')\n    data = message.get('data')\n\n    for user_id in user_ids:\n        user_sids = get_user_connections(user_id)\n        for sid in user_sids:\n            self.socketio.emit(event_name, data, to=sid)\n```\n\n## Gunicorn Threading Bug\n\nडेवलपमेंट में सब कुछ काम करता था। Gunicorn के gevent workers के साथ प्रोडक्शन में, Redis subscriber thread चुपचाप मर जाता था। दो compounding issues: Gunicorn का pre-fork model app initialization के दौरान शुरू किए गए threads को destroy कर देता है, और gevent की monkey patching timing dev और prod में अलग होती है। फिक्स था `threading.Thread` को `socketio.start_background_task()` से replace करना, जो gevent mode में auto-select करता है `gevent.spawn()`। छोटा change, ढूंढने में घंटों की debugging।\n\n## Complexity को Abstract करना\n\nDomain code को Redis या container coordination के बारे में पता नहीं होना चाहिए। `NotificationService` सिंपल methods expose करती है जैसे `broadcast_attempt_update(event_id, team_id, challenge_id)`। अंदर यह user IDs resolve करती है, Redis को publish करती है, failures को gracefully handle करती है। Scoring controller पर काम करने वाला teammate बस method call करता है और आगे बढ़ता है।\n\n## Decorator-Based Middleware\n\nहर endpoint को auth, input validation, resource loading, और permission checks चाहिए। Code review और team के साथ iteration से जो pattern उभरा: composable decorators जो cleanly stack होते हैं।\n\n```python\n@user_endpoint(json_required=True)\n@load_event(LoaderType.PARAM)\n@load_challenge(LoaderType.PARAM)\n@load_question(LoaderType.PARAM)\n@load_team_by_user_and_event()\n@check_permissions(PermissionEnum.CAN_PLAY_CHALLENGES)\ndef post(self, event_id, challenge_id, question_id,\n         event, challenge, question, team, current_user, json_data):\n    return submit_answer(event, challenge, question, team, current_user, json_data)\n```\n\nजब तक handler run होता है, auth verified है, JSON parsed है, सारे models loaded हैं, permissions checked हैं। Handler सिर्फ business logic करता है। यह pattern PRs और feedback के through पूरे backend में फैल गया।\n\n## मैंने क्या सीखा\n\nयह पहली बार था जब मैंने असली team के साथ इस scale पर कुछ काम किया। Senior devs, खासकर जो DevOps और Docker Swarm orchestration handle करते थे, ने मुझे सिखाया कि distributed systems के बारे में असल में कैसे सोचना है। Decorator patterns code review feedback से आए। मेरे early PRs को later वालों से compare करो, growth obvious है। ऐसा code ship करना जो दूसरे लोगों को maintain करना है, आपके लिखने का तरीका बदल देता है।",
+    "responsibilities": null,
+    "achievements": [
+      "#1 योगदानकर्ता (70K+ लाइन्स)",
+      "8 पूर्ण domains बनाए",
+      "50+ API endpoints",
+      "70% test suite",
+      "मल्टी-कंटेनर WebSocket coordination"
+    ],
+    "tech_stack": ["Python", "Flask", "Flask-SocketIO", "Redis", "PostgreSQL", "SQLAlchemy", "AWS SES", "AWS S3", "Docker", "pytest"],
+    "display_order": 1,
+    "is_visible": true
+  },
+  {
+    "language": "hi",
+    "company": "Sealing Technologies",
+    "company_url": "https://sealingtech.com",
+    "company_logo_url": null,
+    "location": "Columbia, MD",
+    "role": "इंटीग्रेशन टेक II",
+    "department": "प्रोडक्शन",
+    "employment_type": "full_time",
+    "start_date": "2025-05-01",
+    "end_date": "2025-05-01",
+    "is_current": false,
+    "description": "कस्टम डिफेंस सिस्टम के लिए क्वालिटी एश्योरेंस और सिस्टम इंटीग्रेशन, जिसमें सर्वर, नेटवर्क स्विच, और क्लाइंट स्पेसिफिकेशन के अनुसार बनाए गए Cyber-Fly-Away Kits शामिल हैं। ISO 9001:2015 certified workflows में हार्डवेयर को validate किया, सरकारी और डिफेंस ग्राहकों को deployment से पहले।\n\nQA प्रोसेस में BIOS configurations, BMC firmware, system memory, और storage health metrics की verification शामिल थी। Prime95 से stress testing में CPUs को thermal limits तक push किया जबकि temperatures और fan speeds monitor की। FIO ने storage I/O benchmark किया ताकि confirm हो कि drives sustained write operations को बिना degradation के handle कर सकती हैं। Network interface cards को expected throughput के लिए validate किया गया। हर system shipping से पहले documented checks से गुजरा।\n\nhands-on QA के अलावा, मैंने company website के लिए technical blogs लिखे जो हमारी assembly और testing processes explain करते थे, और SOPs develop किए ताकि teams में procedures standardize हों और नए techs की onboarding streamline हो।",
+    "responsibilities": null,
+    "achievements": [
+      "$40M+ के server/network hardware पर consult किया",
+      "ISO 9001:2015 compliance",
+      "Company technical blogs लिखे",
+      "Team SOPs develop किए"
+    ],
+    "tech_stack": ["RHEL", "SELinux", "Prime95", "FIO", "BMC/BIOS", "Hardware Diagnostics"],
+    "display_order": 2,
+    "is_visible": true
+  },
+  {
+    "language": "hi",
+    "company": "Jimmy John's",
+    "company_url": null,
+    "company_logo_url": null,
+    "location": "Severna Park, MD",
+    "role": "जनरल मैनेजर",
+    "department": null,
+    "employment_type": "full_time",
+    "start_date": "2022-12-01",
+    "end_date": "2025-06-01",
+    "is_current": false,
+    "description": "Tech से पहले, मैंने एक high-volume restaurant चलाया। 10+ की team manage की, daily operations handle किए, labor costs कम करने के लिए workflows optimize किए, और consistently performance targets hit किए। 5-store franchise में top-performing GM बना। Job ने मुझे सिखाया कि pressure में कैसे lead करना है, जब सब कुछ urgent लगे तब prioritize कैसे करना है, और outcomes की ownership कैसे लेनी है। Different industry, same fundamentals।",
+    "responsibilities": null,
+    "achievements": [
+      "Top-performing GM",
+      "10+ staff manage किए",
+      "Delivery times 8 min/week कम किए"
+    ],
+    "tech_stack": null,
+    "display_order": 3,
+    "is_visible": true
+  }
+]

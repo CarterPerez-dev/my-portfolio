@@ -7,7 +7,26 @@
 name: ${APP_NAME:-template}
 
 services:
-  # Nginx + Frontend
+  # Cloudflare Tunnel
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: ${APP_NAME:-portfolio}-tunnel
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - frontend
+    depends_on:
+      nginx:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    restart: unless-stopped
+
+  # OpenResty (Nginx + Lua) + Frontend
   nginx:
     build:
       context: .
@@ -17,13 +36,20 @@ services:
         - VITE_APP_TITLE=${VITE_APP_TITLE:-My App}
     container_name: ${APP_NAME:-template}-nginx
     ports:
-      - "${NGINX_HOST_PORT:-8420}:80"
+      - "127.0.0.1:${NGINX_HOST_PORT:-8421}:80"
     depends_on:
       backend:
         condition: service_healthy
     networks:
       - frontend
       - backend
+      - monitoring
+    healthcheck:
+      test: ["CMD", "curl", "-fsSL", "http://localhost:80/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     deploy:
       resources:
         limits:
@@ -55,6 +81,7 @@ services:
         condition: service_healthy
     networks:
       - backend
+      - monitoring
     deploy:
       resources:
         limits:
@@ -110,6 +137,8 @@ services:
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes ${REDIS_PASSWORD:+--requirepass ${REDIS_PASSWORD}}
+    environment:
+      - REDISCLI_AUTH=${REDIS_PASSWORD:-}
     networks:
       - backend
     deploy:
@@ -127,12 +156,86 @@ services:
       retries: 5
     restart: unless-stopped
 
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:v3.4.0
+    container_name: ${APP_NAME:-template}-prometheus
+    user: "65534:65534"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - "127.0.0.1:${PROMETHEUS_HOST_PORT:-9090}:9090"
+    volumes:
+      - ./infra/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:12.0.1
+    container_name: ${APP_NAME:-template}-grafana
+    user: "472:472"
+    ports:
+      - "127.0.0.1:${GRAFANA_HOST_PORT:-3000}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=${GRAFANA_ROOT_URL:-http://localhost:3000}
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infra/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
 networks:
   frontend:
     driver: bridge
   backend:
     driver: bridge
+  monitoring:
+    driver: bridge
 
 volumes:
   postgres_data:
   redis_data:
+  prometheus_data:
+  grafana_data:

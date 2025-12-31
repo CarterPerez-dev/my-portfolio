@@ -1,0 +1,6 @@
+{
+  "title": "Descripción General",
+  "intro": "Desarrollador full-stack con seis años de experiencia y un fuerte enfoque en backend. Actualmente trabajo como Ingeniero de Software, dedicando la mayor parte de mi tiempo a construir APIs y sistemas backend que realmente funcionan a escala.",
+  "stack": "Mi stack principal es FastAPI en el backend con React y TypeScript en el frontend. PostgreSQL maneja los datos, SCSS maneja los estilos, y Docker junto con Nginx se encargan del despliegue. También escribo código de producción en Go, Rust y Haskell cuando la situación lo requiere.",
+  "focus": "Me especializo en frameworks backend y diseño de APIs. Si involucra manejo de peticiones, validación de datos, flujos de autenticación u optimización de bases de datos, ahí es donde hago mi mejor trabajo."
+}

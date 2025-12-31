@@ -77,8 +77,15 @@ $tracking-wider: 0.05em;
 $white: hsl(0, 0%, 100%);
 $black: hsl(0, 0%, 0%);
 
-$bg-auth-card: hsl(0, 0%, 5.2%);
+// Auth
+$bg-auth-card: hsl(0, 0%, 6%);
 $bg-page: hsl(0, 0%, 11%);
+
+// Portfolio
+$bg-sidebar: hsl(0, 0%, 10.7%);
+$bg-portfolio-page: hsl(0, 0%, 10.7%);
+
+// IDK
 $bg-default: hsl(0, 0%, 7.1%);
 $bg-alternative: hsl(0, 0%, 5.9%);
 $bg-surface-75: hsl(0, 0%, 9%);
@@ -101,8 +108,15 @@ $text-light: hsl(0, 0%, 70.6%);
 $text-lighter: hsl(0, 0%, 53.7%);
 $text-muted: hsl(0, 0%, 30.2%);
 
+$accent: hsl(153, 60%, 53%);
+$accent-hover: hsl(153, 60%, 60%);
+$accent-muted: hsla(153, 60%, 53%, 0.15);
+$accent-ring: hsla(153, 60%, 53%, 0.1);
+
 $error-default: hsl(0, 72%, 51%);
 $error-light: hsl(0, 72%, 65%);
+
+$search-highlight: hsl(45, 100%, 50%);
 
 // ============================================================================
 // BORDER RADIUS
@@ -161,3 +175,12 @@ $container-lg: 32rem;
 $container-xl: 36rem;
 $container-2xl: 42rem;
 $container-full: 100%;
+
+// ============================================================================
+// DOCS LAYOUT
+// ============================================================================
+$sidebar-width: 280px;
+$sidebar-width-collapsed: 0px;
+$toc-width: 220px;
+$content-max-width: 900px;
+$header-height: 0px;

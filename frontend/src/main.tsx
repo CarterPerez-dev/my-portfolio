@@ -5,6 +5,7 @@
 
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@/core/i18n/i18n.config'
 import App from './App'
 import './styles.scss'
 

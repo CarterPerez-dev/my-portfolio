@@ -14,12 +14,8 @@ from sqlalchemy.orm import (
     mapped_column,
 )
 
+import config
 from config import (
-    CERTIFICATION_CREDENTIAL_ID_MAX_LENGTH,
-    CERTIFICATION_ISSUER_MAX_LENGTH,
-    CERTIFICATION_NAME_MAX_LENGTH,
-    DEFAULT_DISPLAY_ORDER,
-    URL_MAX_LENGTH,
     CertificationCategory,
     Language,
     SafeEnum,
@@ -39,31 +35,32 @@ class Certification(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "certifications"
 
     language: Mapped[Language] = mapped_column(
-        SafeEnum(Language, unknown_value = Language.UNKNOWN),
+        SafeEnum(Language,
+                 unknown_value = Language.UNKNOWN),
         default = Language.ENGLISH,
     )
 
     name: Mapped[str] = mapped_column(
-        String(CERTIFICATION_NAME_MAX_LENGTH),
+        String(config.CERTIFICATION_NAME_MAX_LENGTH),
     )
     issuer: Mapped[str] = mapped_column(
-        String(CERTIFICATION_ISSUER_MAX_LENGTH),
+        String(config.CERTIFICATION_ISSUER_MAX_LENGTH),
     )
     issuer_url: Mapped[str | None] = mapped_column(
-        String(URL_MAX_LENGTH),
+        String(config.URL_MAX_LENGTH),
         default = None,
     )
     issuer_logo_url: Mapped[str | None] = mapped_column(
-        String(URL_MAX_LENGTH),
+        String(config.URL_MAX_LENGTH),
         default = None,
     )
 
     credential_id: Mapped[str | None] = mapped_column(
-        String(CERTIFICATION_CREDENTIAL_ID_MAX_LENGTH),
+        String(config.CERTIFICATION_CREDENTIAL_ID_MAX_LENGTH),
         default = None,
     )
     verification_url: Mapped[str | None] = mapped_column(
-        String(URL_MAX_LENGTH),
+        String(config.URL_MAX_LENGTH),
         default = None,
     )
 
@@ -79,17 +76,20 @@ class Certification(Base, UUIDMixin, TimestampMixin):
     )
 
     badge_image_url: Mapped[str | None] = mapped_column(
-        String(URL_MAX_LENGTH),
+        String(config.URL_MAX_LENGTH),
         default = None,
     )
 
     category: Mapped[CertificationCategory | None] = mapped_column(
-        SafeEnum(CertificationCategory, unknown_value = CertificationCategory.UNKNOWN),
+        SafeEnum(
+            CertificationCategory,
+            unknown_value = CertificationCategory.UNKNOWN
+        ),
         default = None,
     )
 
     display_order: Mapped[int] = mapped_column(
-        default = DEFAULT_DISPLAY_ORDER,
+        default = config.DEFAULT_DISPLAY_ORDER,
     )
     is_visible: Mapped[bool] = mapped_column(
         default = True,

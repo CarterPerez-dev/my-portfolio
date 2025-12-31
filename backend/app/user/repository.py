@@ -27,9 +27,7 @@ class UserRepository(BaseRepository[User]):
         """
         Get user by email address
         """
-        result = await session.execute(
-            select(User).where(User.email == email)
-        )
+        result = await session.execute(select(User).where(User.email == email))
         return result.scalars().first()
 
     @classmethod

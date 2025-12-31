@@ -101,10 +101,7 @@ async def test_get_user_by_id(
 
 
 @pytest.mark.asyncio
-async def test_get_user_unauthenticated(
-    client: AsyncClient,
-    test_user: User
-):
+async def test_get_user_unauthenticated(client: AsyncClient, test_user: User):
     """
     Get user without auth returns 401
     """

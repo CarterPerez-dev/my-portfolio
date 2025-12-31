@@ -28,6 +28,35 @@ export const API_ENDPOINTS = {
       DELETE: (id: string) => `/${API_VERSION}/admin/users/${id}`,
     },
   },
+  PROJECTS: {
+    LIST: `/${API_VERSION}/projects`,
+    FEATURED: `/${API_VERSION}/projects/featured`,
+    NAV: `/${API_VERSION}/projects/nav`,
+    BY_SLUG: (slug: string) => `/${API_VERSION}/projects/${slug}`,
+  },
+  EXPERIENCES: {
+    LIST: `/${API_VERSION}/experiences`,
+    CURRENT: `/${API_VERSION}/experiences/current`,
+    TIMELINE: `/${API_VERSION}/experiences/timeline`,
+    BY_ID: (id: string) => `/${API_VERSION}/experiences/${id}`,
+  },
+  CERTIFICATIONS: {
+    LIST: `/${API_VERSION}/certifications`,
+    ACTIVE: `/${API_VERSION}/certifications/active`,
+    BADGES: `/${API_VERSION}/certifications/badges`,
+    BY_CATEGORY: (category: string) =>
+      `/${API_VERSION}/certifications/category/${category}`,
+    BY_ID: (id: string) => `/${API_VERSION}/certifications/${id}`,
+  },
+  BLOGS: {
+    LIST: `/${API_VERSION}/blogs`,
+    FEATURED: `/${API_VERSION}/blogs/featured`,
+    NAV: `/${API_VERSION}/blogs/nav`,
+    BY_CATEGORY: (category: string) =>
+      `/${API_VERSION}/blogs/category/${category}`,
+    BY_ID: (id: string) => `/${API_VERSION}/blogs/${id}`,
+  },
+  SEARCH: `/${API_VERSION}/search`,
 } as const
 
 export const QUERY_KEYS = {
@@ -50,6 +79,55 @@ export const QUERY_KEYS = {
         [...QUERY_KEYS.ADMIN.USERS.ALL(), 'detail', id] as const,
     },
   },
+  PROJECTS: {
+    ALL: ['projects'] as const,
+    LIST: (lang: string) => [...QUERY_KEYS.PROJECTS.ALL, 'list', lang] as const,
+    FEATURED: (lang: string) =>
+      [...QUERY_KEYS.PROJECTS.ALL, 'featured', lang] as const,
+    NAV: (lang: string) => [...QUERY_KEYS.PROJECTS.ALL, 'nav', lang] as const,
+    BY_SLUG: (slug: string, lang: string) =>
+      [...QUERY_KEYS.PROJECTS.ALL, 'detail', slug, lang] as const,
+  },
+  EXPERIENCES: {
+    ALL: ['experiences'] as const,
+    LIST: (lang: string) =>
+      [...QUERY_KEYS.EXPERIENCES.ALL, 'list', lang] as const,
+    CURRENT: (lang: string) =>
+      [...QUERY_KEYS.EXPERIENCES.ALL, 'current', lang] as const,
+    TIMELINE: (lang: string) =>
+      [...QUERY_KEYS.EXPERIENCES.ALL, 'timeline', lang] as const,
+    BY_ID: (id: string, lang: string) =>
+      [...QUERY_KEYS.EXPERIENCES.ALL, 'detail', id, lang] as const,
+  },
+  CERTIFICATIONS: {
+    ALL: ['certifications'] as const,
+    LIST: (lang: string) =>
+      [...QUERY_KEYS.CERTIFICATIONS.ALL, 'list', lang] as const,
+    ACTIVE: (lang: string) =>
+      [...QUERY_KEYS.CERTIFICATIONS.ALL, 'active', lang] as const,
+    BADGES: (lang: string) =>
+      [...QUERY_KEYS.CERTIFICATIONS.ALL, 'badges', lang] as const,
+    BY_CATEGORY: (category: string, lang: string) =>
+      [...QUERY_KEYS.CERTIFICATIONS.ALL, 'category', category, lang] as const,
+    BY_ID: (id: string, lang: string) =>
+      [...QUERY_KEYS.CERTIFICATIONS.ALL, 'detail', id, lang] as const,
+  },
+  BLOGS: {
+    ALL: ['blogs'] as const,
+    LIST: (lang: string) => [...QUERY_KEYS.BLOGS.ALL, 'list', lang] as const,
+    FEATURED: (lang: string) =>
+      [...QUERY_KEYS.BLOGS.ALL, 'featured', lang] as const,
+    NAV: (lang: string) => [...QUERY_KEYS.BLOGS.ALL, 'nav', lang] as const,
+    BY_CATEGORY: (category: string, lang: string) =>
+      [...QUERY_KEYS.BLOGS.ALL, 'category', category, lang] as const,
+    BY_ID: (id: string, lang: string) =>
+      [...QUERY_KEYS.BLOGS.ALL, 'detail', id, lang] as const,
+  },
+  SEARCH: {
+    ALL: ['search'] as const,
+    QUERY: (q: string, lang: string) =>
+      [...QUERY_KEYS.SEARCH.ALL, q, lang] as const,
+  },
 } as const
 
 export const ROUTES = {
@@ -59,6 +137,17 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   SETTINGS: '/settings',
   UNAUTHORIZED: '/unauthorized',
+  OVERVIEW: '/overview',
+  QUICK_START: '/quick-start',
+  PROJECTS: {
+    INDEX: '/projects',
+    DETAIL: (slug: string) => `/projects/${slug}`,
+  },
+  BACKGROUND: {
+    EXPERIENCE: '/background/experience',
+    CERTIFICATIONS: '/background/certifications',
+  },
+  SEARCH: '/search',
   ADMIN: {
     DASHBOARD: '/admin',
     USERS: '/admin/users',
@@ -69,6 +158,7 @@ export const ROUTES = {
 export const STORAGE_KEYS = {
   AUTH: 'auth-storage',
   UI: 'ui-storage',
+  LANGUAGE: 'language-storage',
 } as const
 
 export const QUERY_CONFIG = {
@@ -76,10 +166,12 @@ export const QUERY_CONFIG = {
     USER: 1000 * 60 * 5,
     STATIC: Infinity,
     FREQUENT: 1000 * 30,
+    PORTFOLIO: 1000 * 60 * 60 * 24,
   },
   GC_TIME: {
     DEFAULT: 1000 * 60 * 30,
     LONG: 1000 * 60 * 60,
+    PORTFOLIO: 1000 * 60 * 60 * 24,
   },
   RETRY: {
     DEFAULT: 3,

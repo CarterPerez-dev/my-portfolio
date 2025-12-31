@@ -1,0 +1,100 @@
+{
+  "common": {
+    "search": "खोजें",
+    "searchPlaceholder": "खोजें...",
+    "loading": "लोड हो रहा है...",
+    "error": "एक त्रुटि हुई",
+    "notFound": "नहीं मिला",
+    "goBack": "वापस जाएं",
+    "previous": "पिछला",
+    "next": "अगला",
+    "viewAll": "सभी देखें",
+    "readMore": "और पढ़ें",
+    "externalLink": "नई टैब में खुलता है"
+  },
+  "nav": {
+    "gettingStarted": "शुरुआत",
+    "overview": "अवलोकन",
+    "quickStart": "त्वरित शुरुआत",
+    "projects": "परियोजनाएं",
+    "background": "पृष्ठभूमि",
+    "experience": "अनुभव",
+    "certifications": "प्रमाणपत्र",
+    "writing": "लेखन",
+    "onThisPage": "इस पृष्ठ पर"
+  },
+  "version": {
+    "stable": "स्थिर",
+    "latest": "नवीनतम",
+    "github": "GitHub",
+    "resume": "रिज्यूमे",
+    "contact": "संपर्क"
+  },
+  "search": {
+    "title": "खोज परिणाम",
+    "found": "खोज पूर्ण, {{count}} पृष्ठ मिला।",
+    "found_plural": "खोज पूर्ण, {{count}} पृष्ठ मिले।",
+    "noResults": "\"{{query}}\" के लिए कोई परिणाम नहीं मिला",
+    "tryAgain": "कोई अन्य खोज शब्द आज़माएं"
+  },
+  "overview": {
+    "title": "अवलोकन",
+    "badges": {
+      "projects": "परियोजनाएं",
+      "commits": "कमिट्स",
+      "certs": "प्रमाणपत्र"
+    }
+  },
+  "quickStart": {
+    "title": "त्वरित शुरुआत",
+    "description": "संपर्क और अधिक जानने के लिए त्वरित लिंक"
+  },
+  "projects": {
+    "title": "परियोजनाएं",
+    "technicalDetails": "तकनीकी विवरण",
+    "techStack": "तकनीकी स्टैक",
+    "links": "लिंक",
+    "viewSource": "स्रोत देखें",
+    "liveDemo": "लाइव डेमो",
+    "documentation": "दस्तावेज़",
+    "status": {
+      "active": "सक्रिय",
+      "maintained": "रखरखाव में",
+      "archived": "संग्रहीत",
+      "deprecated": "अप्रचलित"
+    }
+  },
+  "experience": {
+    "title": "अनुभव",
+    "present": "वर्तमान",
+    "employmentType": {
+      "full_time": "पूर्णकालिक",
+      "part_time": "अंशकालिक",
+      "contract": "अनुबंध",
+      "freelance": "फ्रीलांस",
+      "internship": "इंटर्नशिप"
+    }
+  },
+  "certifications": {
+    "title": "प्रमाणपत्र",
+    "obtained": "प्राप्त",
+    "expires": "समाप्ति",
+    "expired": "समाप्त",
+    "noExpiry": "कोई समाप्ति नहीं",
+    "verify": "सत्यापित करें",
+    "category": {
+      "security": "सुरक्षा",
+      "cloud": "क्लाउड",
+      "programming": "प्रोग्रामिंग",
+      "networking": "नेटवर्किंग",
+      "database": "डेटाबेस",
+      "devops": "DevOps"
+    }
+  },
+  "errors": {
+    "pageNotFound": "पृष्ठ नहीं मिला",
+    "pageNotFoundDesc": "आप जिस पृष्ठ की तलाश कर रहे हैं वह मौजूद नहीं है।",
+    "somethingWentWrong": "कुछ गलत हो गया",
+    "tryAgain": "पुनः प्रयास करें"
+  }
+}

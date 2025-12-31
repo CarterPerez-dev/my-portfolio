@@ -53,11 +53,7 @@ class ConflictError(BaseAppException):
         extra: dict[str,
                     Any] | None = None,
     ) -> None:
-        super().__init__(
-            message = message,
-            status_code = 409,
-            extra = extra
-        )
+        super().__init__(message = message, status_code = 409, extra = extra)
 
 
 class ValidationError(BaseAppException):
@@ -71,11 +67,7 @@ class ValidationError(BaseAppException):
         extra: dict[str,
                     Any] | None = None,
     ) -> None:
-        super().__init__(
-            message = message,
-            status_code = 422,
-            extra = extra
-        )
+        super().__init__(message = message, status_code = 422, extra = extra)
         self.field = field
 
 
@@ -89,11 +81,7 @@ class AuthenticationError(BaseAppException):
         extra: dict[str,
                     Any] | None = None,
     ) -> None:
-        super().__init__(
-            message = message,
-            status_code = 401,
-            extra = extra
-        )
+        super().__init__(message = message, status_code = 401, extra = extra)
 
 
 class TokenError(AuthenticationError):
@@ -128,11 +116,7 @@ class PermissionDenied(BaseAppException):
         extra: dict[str,
                     Any] | None = None,
     ) -> None:
-        super().__init__(
-            message = message,
-            status_code = 403,
-            extra = extra
-        )
+        super().__init__(message = message, status_code = 403, extra = extra)
         self.required_permission = required_permission
 
 
@@ -147,11 +131,7 @@ class RateLimitExceeded(BaseAppException):
         extra: dict[str,
                     Any] | None = None,
     ) -> None:
-        super().__init__(
-            message = message,
-            status_code = 420,
-            extra = extra
-        )
+        super().__init__(message = message, status_code = 420, extra = extra)
         self.retry_after = retry_after
 
 
@@ -176,12 +156,7 @@ class EmailAlreadyExists(ConflictError):
     """
     Raised when attempting to register with an existing email
     """
-    def __init__(
-        self,
-        email: str,
-        extra: dict[str,
-                    Any] | None = None
-    ) -> None:
+    def __init__(self, email: str, extra: dict[str, Any] | None = None) -> None:
         super().__init__(
             message = f"Email '{email}' is already registered",
             extra = extra,
@@ -194,10 +169,7 @@ class InvalidCredentials(AuthenticationError):
     Raised when login credentials are invalid
     """
     def __init__(self, extra: dict[str, Any] | None = None) -> None:
-        super().__init__(
-            message = "Invalid email or password",
-            extra = extra
-        )
+        super().__init__(message = "Invalid email or password", extra = extra)
 
 
 class InactiveUser(AuthenticationError):
@@ -205,7 +177,72 @@ class InactiveUser(AuthenticationError):
     Raised when an inactive user attempts to authenticate.
     """
     def __init__(self, extra: dict[str, Any] | None = None) -> None:
+        super().__init__(message = "User account is inactive", extra = extra)
+
+
+class ProjectNotFound(ResourceNotFound):
+    """
+    Raised when a project is not found.
+    """
+    def __init__(
+        self,
+        identifier: str,
+        extra: dict[str,
+                    Any] | None = None,
+    ) -> None:
         super().__init__(
-            message = "User account is inactive",
-            extra = extra
+            resource = "Project",
+            identifier = identifier,
+            extra = extra,
+        )
+
+
+class ExperienceNotFound(ResourceNotFound):
+    """
+    Raised when an experience is not found.
+    """
+    def __init__(
+        self,
+        identifier: str,
+        extra: dict[str,
+                    Any] | None = None,
+    ) -> None:
+        super().__init__(
+            resource = "Experience",
+            identifier = identifier,
+            extra = extra,
+        )
+
+
+class CertificationNotFound(ResourceNotFound):
+    """
+    Raised when a certification is not found.
+    """
+    def __init__(
+        self,
+        identifier: str,
+        extra: dict[str,
+                    Any] | None = None,
+    ) -> None:
+        super().__init__(
+            resource = "Certification",
+            identifier = identifier,
+            extra = extra,
+        )
+
+
+class BlogNotFound(ResourceNotFound):
+    """
+    Raised when a blog post is not found.
+    """
+    def __init__(
+        self,
+        identifier: str,
+        extra: dict[str,
+                    Any] | None = None,
+    ) -> None:
+        super().__init__(
+            resource = "Blog",
+            identifier = identifier,
+            extra = extra,
         )
