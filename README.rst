@@ -1,4 +1,4 @@
-CarterPerez.dev.com
+CarterPerez.dev
 =============
 
 2025 \| ©AngelaMos
