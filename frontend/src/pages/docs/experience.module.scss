@@ -1,0 +1,105 @@
+// ===================
+// © AngelaMos | 2025
+// experience.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.header {
+  margin-bottom: $space-8;
+}
+
+.title {
+  margin: 0;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $text-default;
+  line-height: $line-height-tight;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+}
+
+.card {
+  padding-top: $space-6;
+  border-top: 1px solid $border-muted;
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+.cardHeader {
+  margin-bottom: $space-4;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: $space-2 $space-4;
+  margin-bottom: $space-1;
+}
+
+.company {
+  margin: 0;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-default;
+  line-height: $line-height-tight;
+}
+
+.dates {
+  font-size: $font-size-xs;
+  color: $text-lighter;
+  white-space: nowrap;
+}
+
+.role {
+  margin: 0;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $accent;
+}
+
+.location {
+  margin: $space-1 0 0;
+  font-size: $font-size-xs;
+  color: $text-lighter;
+}
+
+.cardContent {
+  margin-bottom: $space-4;
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.techBadge {
+  padding: $space-1 $space-2;
+  background: $bg-surface-100;
+  border: 1px solid $border-default;
+  border-radius: $radius-xs;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: $font-size-xs;
+  color: $text-light;
+}
+
+.loading,
+.error {
+  padding: $space-8;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $text-lighter;
+}
+
+.error {
+  color: $error-light;
+}

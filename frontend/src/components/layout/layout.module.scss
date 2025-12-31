@@ -1,0 +1,172 @@
+// ===================
+// © AngelaMos | 2025
+// layout.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: $bg-default;
+  background-image: radial-gradient(
+    circle,
+    $bg-portfolio-page 1px,
+    transparent 1px
+  );
+  background-size: 21px 21px;
+}
+
+.menuButton {
+  display: none;
+  position: fixed;
+  top: 29px;
+  left: $space-4;
+  z-index: $z-fixed;
+  padding: $space-2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  @include transition-fast;
+
+  @include hover {
+    .menuIcon,
+    .menuIcon::before,
+    .menuIcon::after {
+      background: $text-default;
+    }
+  }
+
+  @include breakpoint-down('lg') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.menuIcon {
+  position: relative;
+  width: 18px;
+  height: 2px;
+  background: $text-light;
+  @include transition-fast;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    background: $text-light;
+    @include transition-fast;
+  }
+
+  &::before {
+    top: -6px;
+  }
+
+  &::after {
+    top: 6px;
+  }
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: $z-overlay;
+  background: rgba(0, 0, 0, 0.5);
+
+  @include breakpoint-down('lg') {
+    display: block;
+  }
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: $sidebar-width;
+  margin-right: $toc-width;
+  padding: $space-8 $space-10;
+
+  @include breakpoint-down('xl') {
+    margin-right: 0;
+  }
+
+  @include breakpoint-down('lg') {
+    margin-left: 0;
+    padding: $space-6 $space-16;
+  }
+
+  @media (max-width: 700px) {
+    padding: $space-6 $space-10 $space-6 $space-12;
+  }
+}
+
+.content {
+  width: 100%;
+  max-width: $content-max-width;
+  margin: 0 auto;
+}
+
+.toc {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: $toc-width;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: $space-8 $space-6 $space-8 0;
+
+  @include breakpoint-down('xl') {
+    display: none;
+  }
+}
+
+.tocOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: $z-overlay;
+  background: rgba(0, 0, 0, 0.5);
+
+  @include breakpoint-down('xl') {
+    display: block;
+  }
+}
+
+.tocDrawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: $toc-width;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: $space-8 $space-6;
+  background-color: $bg-alternative;
+  background-image: radial-gradient(
+    circle,
+    $bg-sidebar 1px,
+    transparent 1px
+  );
+  background-size: 17px 17px;
+  border-left: 1px solid $border-muted;
+  z-index: $z-modal;
+  transform: translateX(100%);
+  transition: transform $duration-slow $ease-out;
+
+  @include breakpoint-down('xl') {
+    display: block;
+  }
+
+  &.tocDrawerOpen {
+    transform: translateX(0);
+  }
+}

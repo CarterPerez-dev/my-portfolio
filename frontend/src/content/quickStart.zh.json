@@ -1,0 +1,53 @@
+{
+  "title": "快速开始",
+  "description": "联系、下载或探索的链接。",
+  "sections": {
+    "connect": {
+      "title": "联系方式",
+      "items": [
+        {
+          "label": "GitHub",
+          "description": "代码、提交记录和贡献历史",
+          "key": "github"
+        },
+        {
+          "label": "LinkedIn",
+          "description": "职业档案和工作经历",
+          "key": "linkedin"
+        },
+        {
+          "label": "Email",
+          "description": "直接联系，洽谈机会或咨询问题",
+          "key": "email"
+        }
+      ]
+    },
+    "download": {
+      "title": "下载",
+      "items": [
+        {
+          "label": "Resume",
+          "description": "PDF格式，2026年更新",
+          "key": "resume"
+        }
+      ]
+    },
+    "featured": {
+      "title": "精选项目",
+      "items": [
+        {
+          "slug": "fullstack-template",
+          "description": "生产就绪的FastAPI + React模板"
+        },
+        {
+          "slug": "certgames",
+          "description": "游戏化认证备考平台"
+        },
+        {
+          "slug": "cybersecurity-projects",
+          "description": "安全工具和研究实现"
+        }
+      ]
+    }
+  }
+}

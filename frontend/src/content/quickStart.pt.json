@@ -1,0 +1,53 @@
+{
+  "title": "Início Rápido",
+  "description": "Links para conectar, baixar ou explorar.",
+  "sections": {
+    "connect": {
+      "title": "Conectar",
+      "items": [
+        {
+          "label": "GitHub",
+          "description": "Código, commits e histórico de contribuições",
+          "key": "github"
+        },
+        {
+          "label": "LinkedIn",
+          "description": "Perfil profissional e histórico de trabalho",
+          "key": "linkedin"
+        },
+        {
+          "label": "Email",
+          "description": "Contato direto para oportunidades ou dúvidas",
+          "key": "email"
+        }
+      ]
+    },
+    "download": {
+      "title": "Download",
+      "items": [
+        {
+          "label": "Resume",
+          "description": "Formato PDF, atualizado 2026",
+          "key": "resume"
+        }
+      ]
+    },
+    "featured": {
+      "title": "Projetos em Destaque",
+      "items": [
+        {
+          "slug": "fullstack-template",
+          "description": "Boilerplate FastAPI + React pronto para produção"
+        },
+        {
+          "slug": "certgames",
+          "description": "Plataforma gamificada de preparação para certificações"
+        },
+        {
+          "slug": "cybersecurity-projects",
+          "description": "Ferramentas de segurança e implementações de pesquisa"
+        }
+      ]
+    }
+  }
+}

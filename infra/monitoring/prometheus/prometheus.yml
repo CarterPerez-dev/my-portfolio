@@ -1,0 +1,34 @@
+# =============================================================================
+# AngelaMos | 2025
+# prometheus.yml
+# =============================================================================
+
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+
+  external_labels:
+    monitor: 'portfolio'
+
+alerting:
+  alertmanagers: []
+
+rule_files: []
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'openresty'
+    static_configs:
+      - targets: ['nginx:80']
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  - job_name: 'fastapi'
+    static_configs:
+      - targets: ['backend:8000']
+    metrics_path: /metrics
+    scrape_interval: 15s

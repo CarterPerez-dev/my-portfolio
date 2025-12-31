@@ -1,0 +1,36 @@
+// ===================
+// © AngelaMos | 2025
+// search.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.search {
+  margin-bottom: $space-4;
+}
+
+.input {
+  width: 100%;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  color: $text-default;
+  background: $bg-control;
+  border: 1px solid $border-default;
+  border-radius: $radius-sm;
+  outline: none;
+  @include transition-fast;
+
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-decoration {
+    display: none;
+    appearance: none;
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &:focus {
+    filter: brightness(1.1);
+  }
+}

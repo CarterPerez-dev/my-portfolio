@@ -9,12 +9,8 @@ from pydantic import (
     field_validator,
 )
 
-from config import (
-    UserRole,
-    FULL_NAME_MAX_LENGTH,
-    PASSWORD_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH,
-)
+import config
+from config import UserRole
 from core.base_schema import (
     BaseSchema,
     BaseResponseSchema,
@@ -27,12 +23,12 @@ class UserCreate(BaseSchema):
     """
     email: EmailStr
     password: str = Field(
-        min_length = PASSWORD_MIN_LENGTH,
-        max_length = PASSWORD_MAX_LENGTH
+        min_length = config.PASSWORD_MIN_LENGTH,
+        max_length = config.PASSWORD_MAX_LENGTH
     )
     full_name: str | None = Field(
         default = None,
-        max_length = FULL_NAME_MAX_LENGTH
+        max_length = config.FULL_NAME_MAX_LENGTH
     )
 
     @field_validator("password")
@@ -56,7 +52,7 @@ class UserUpdate(BaseSchema):
     """
     full_name: str | None = Field(
         default = None,
-        max_length = FULL_NAME_MAX_LENGTH
+        max_length = config.FULL_NAME_MAX_LENGTH
     )
 
 
@@ -76,12 +72,12 @@ class AdminUserCreate(BaseSchema):
     """
     email: EmailStr
     password: str = Field(
-        min_length = PASSWORD_MIN_LENGTH,
-        max_length = PASSWORD_MAX_LENGTH
+        min_length = config.PASSWORD_MIN_LENGTH,
+        max_length = config.PASSWORD_MAX_LENGTH
     )
     full_name: str | None = Field(
         default = None,
-        max_length = FULL_NAME_MAX_LENGTH
+        max_length = config.FULL_NAME_MAX_LENGTH
     )
     role: UserRole = UserRole.USER
     is_active: bool = True

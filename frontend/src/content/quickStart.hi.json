@@ -1,0 +1,53 @@
+{
+  "title": "त्वरित शुरुआत",
+  "description": "जुड़ने, डाउनलोड करने या एक्सप्लोर करने के लिंक।",
+  "sections": {
+    "connect": {
+      "title": "संपर्क करें",
+      "items": [
+        {
+          "label": "GitHub",
+          "description": "कोड, कमिट्स और योगदान इतिहास",
+          "key": "github"
+        },
+        {
+          "label": "LinkedIn",
+          "description": "प्रोफेशनल प्रोफाइल और कार्य इतिहास",
+          "key": "linkedin"
+        },
+        {
+          "label": "Email",
+          "description": "अवसरों या प्रश्नों के लिए सीधा संपर्क",
+          "key": "email"
+        }
+      ]
+    },
+    "download": {
+      "title": "डाउनलोड",
+      "items": [
+        {
+          "label": "Resume",
+          "description": "PDF फॉर्मेट, 2026 में अपडेटेड",
+          "key": "resume"
+        }
+      ]
+    },
+    "featured": {
+      "title": "मुख्य प्रोजेक्ट्स",
+      "items": [
+        {
+          "slug": "fullstack-template",
+          "description": "प्रोडक्शन-रेडी FastAPI + React बॉयलरप्लेट"
+        },
+        {
+          "slug": "certgames",
+          "description": "गेमिफाइड सर्टिफिकेशन प्रेप प्लेटफॉर्म"
+        },
+        {
+          "slug": "cybersecurity-projects",
+          "description": "सिक्योरिटी टूल्स और रिसर्च इम्प्लीमेंटेशन"
+        }
+      ]
+    }
+  }
+}

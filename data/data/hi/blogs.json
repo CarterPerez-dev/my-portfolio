@@ -1,0 +1,62 @@
+[
+  {
+    "language": "hi",
+    "title": "गुणवत्ता को केंद्र में रखकर कस्टम समाधान बनाना",
+    "description": "SealingTech में एक सिस्टम इंटीग्रेशन टेक्नीशियन की यात्रा, हार्डवेयर चयन से लेकर ISO 9001 गुणवत्ता आश्वासन तक, सटीकता के साथ कस्टम डिफेंस सिस्टम का निर्माण।",
+    "external_url": "https://www.sealingtech.com/2024/10/03/building-custom-solutions-with-quality-at-the-core/",
+    "category": "project",
+    "tags": ["sealing-tech", "cybersecurity"],
+    "thumbnail_url": null,
+    "published_date": "2024-10-03",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "hi",
+    "title": "मेरे करियर विकास ने ग्राहक अनुभव को कैसे बेहतर बनाया",
+    "description": "CompTIA प्रमाणपत्र और हैंड्स-ऑन प्रोजेक्ट्स ने SealingTech में मेरी समस्या-समाधान दृष्टिकोण को कैसे बदला और ग्राहक अनुभव को बेहतर बनाया।",
+    "external_url": "https://www.sealingtech.com/2025/02/03/how-my-career-growth-led-to-enhancing-customer-experience/",
+    "category": "career",
+    "tags": ["sealing-tech", "cybersecurity"],
+    "thumbnail_url": null,
+    "published_date": "2025-02-03",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "hi",
+    "title": "CompTIA Security+ परीक्षा पहली बार में पास करने के 10 बेहतरीन टिप्स",
+    "description": "CompTIA Security+ प्रमाणन परीक्षा को पहले प्रयास में पास करने के लिए आवश्यक टिप्स और रणनीतियां, अध्ययन तकनीकों से लेकर समय प्रबंधन तक।",
+    "external_url": "https://certgames.com/blog/comptia-security-plus-exam-tips",
+    "category": "tutorial",
+    "tags": ["cybersecurity", "comptia"],
+    "thumbnail_url": null,
+    "published_date": "2024-12-05",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "hi",
+    "title": "अपनी सीखने की महाशक्तियों को अनलॉक करें: गेमिफाइंग स्टडीज का विज्ञान और कला",
+    "description": "गेमिफिकेशन की शक्ति का उपयोग करके अपनी पढ़ाई को बोझ से रोमांचक खोज में बदलें - सीखने को स्थायी बनाने वाली मनोविज्ञान और व्यावहारिक रणनीतियां जानें।",
+    "external_url": "https://medium.com/@carterperez88/unlocking-your-learning-superpowers-the-science-art-of-gamifying-your-studies-and-why-your-2d55338141f9",
+    "category": "deep_dive",
+    "tags": ["learning", "gamified"],
+    "thumbnail_url": null,
+    "published_date": "2025-05-30",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  }
+]

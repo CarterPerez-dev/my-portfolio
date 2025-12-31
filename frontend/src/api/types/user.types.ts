@@ -59,7 +59,7 @@ export type UserCreateRequest = z.infer<typeof userCreateRequestSchema>
 export type UserUpdateRequest = z.infer<typeof userUpdateRequestSchema>
 export type AdminUserCreateRequest = z.infer<typeof adminUserCreateRequestSchema>
 export type AdminUserUpdateRequest = z.infer<typeof adminUserUpdateRequestSchema>
-export type PaginationParams = z.infer<typeof paginationParamsSchema>
+export type PagePaginationParams = z.infer<typeof paginationParamsSchema>
 
 export const isValidUserListResponse = (
   data: unknown

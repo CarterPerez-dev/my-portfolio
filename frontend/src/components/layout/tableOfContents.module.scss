@@ -1,0 +1,57 @@
+// ===================
+// © AngelaMos | 2025
+// tableOfContents.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.toc {
+  padding-left: $space-4;
+  border-left: 1px solid $border-muted;
+}
+
+.title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $text-lighter;
+  text-transform: uppercase;
+  letter-spacing: $tracking-wide;
+  margin-bottom: $space-3;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  margin: 0;
+}
+
+.link {
+  display: block;
+  width: 100%;
+  padding: $space-1 0;
+  font-size: $font-size-sm;
+  color: $text-light;
+  text-align: left;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  @include transition-fast;
+
+  @include hover {
+    color: $text-default;
+  }
+
+  &.nested {
+    padding-left: $space-3;
+    font-size: $font-size-xs;
+    color: $text-lighter;
+  }
+}

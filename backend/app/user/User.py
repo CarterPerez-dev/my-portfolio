@@ -14,10 +14,8 @@ from sqlalchemy.orm import (
     relationship,
 )
 
+import config
 from config import (
-    EMAIL_MAX_LENGTH,
-    FULL_NAME_MAX_LENGTH,
-    PASSWORD_HASH_MAX_LENGTH,
     SafeEnum,
     UserRole,
 )
@@ -38,16 +36,16 @@ class User(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "users"
 
     email: Mapped[str] = mapped_column(
-        String(EMAIL_MAX_LENGTH),
+        String(config.EMAIL_MAX_LENGTH),
         unique = True,
         index = True,
     )
     hashed_password: Mapped[str] = mapped_column(
-        String(PASSWORD_HASH_MAX_LENGTH)
+        String(config.PASSWORD_HASH_MAX_LENGTH)
     )
 
     full_name: Mapped[str | None] = mapped_column(
-        String(FULL_NAME_MAX_LENGTH),
+        String(config.FULL_NAME_MAX_LENGTH),
         default = None,
     )
 

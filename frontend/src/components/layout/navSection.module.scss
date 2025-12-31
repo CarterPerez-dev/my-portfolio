@@ -1,0 +1,56 @@
+// ===================
+// © AngelaMos | 2025
+// navSection.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.section {
+  margin-bottom: $space-2;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: $space-2 $space-3;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $text-lighter;
+  text-transform: uppercase;
+  letter-spacing: $tracking-wide;
+  background: transparent;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  @include transition-fast;
+
+  @include hover {
+    color: $text-light;
+    background: $bg-surface-75;
+  }
+}
+
+.title {
+  flex: 1;
+  text-align: left;
+}
+
+.chevron {
+  font-size: $font-size-3xs;
+  color: $text-muted;
+  transition: transform $duration-fast $ease-out;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-0-5;
+  padding-left: $space-1;
+  margin-top: $space-1;
+}

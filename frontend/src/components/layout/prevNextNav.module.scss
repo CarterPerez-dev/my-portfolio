@@ -1,0 +1,71 @@
+// ===================
+// © AngelaMos | 2025
+// prevNextNav.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: $space-4;
+  margin-top: $space-12;
+  padding-top: $space-6;
+  border-top: 1px solid $border-muted;
+}
+
+.prev,
+.next {
+  flex: 1;
+  min-width: 0;
+}
+
+.next {
+  text-align: right;
+}
+
+.link {
+  display: inline-flex;
+  flex-direction: column;
+  gap: $space-1;
+  text-decoration: none;
+  @include transition-fast;
+
+  @include hover {
+    .title {
+      color: $accent;
+    }
+
+    .chevron {
+      color: $accent;
+    }
+  }
+}
+
+.next .link {
+  align-items: flex-end;
+}
+
+.direction {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $font-size-xs;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: $tracking-wide;
+}
+
+.title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-light;
+  @include transition-fast;
+}
+
+.chevron {
+  width: 12px;
+  height: 12px;
+  color: $text-muted;
+  @include transition-fast;
+}

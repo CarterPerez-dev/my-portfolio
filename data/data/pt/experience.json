@@ -1,0 +1,74 @@
+[
+  {
+    "language": "pt",
+    "company": "Cyber Skyline",
+    "company_url": "https://cyberskyline.com",
+    "company_logo_url": null,
+    "location": "Remoto",
+    "role": "Engenheiro de Software",
+    "department": "Backend",
+    "employment_type": "full_time",
+    "start_date": "2025-05-01",
+    "end_date": null,
+    "is_current": true,
+    "description": "Engenheiro backend para a plataforma da Competição CTF anual President's Cup da CISA. Entrei em uma equipe de 7 pessoas e me tornei o principal contribuidor do backend, construindo a infraestrutura central da competição incluindo o motor de pontuação, sistema de notificações em tempo real, sistema de tickets de suporte e gerenciamento de equipes/eventos.\n\n## O Problema Multi-Container\n\nA plataforma executa múltiplos containers Flask atrás de um load balancer no Docker Swarm. Implementações padrão de WebSocket falham nessa configuração porque as rooms do Flask-SocketIO ficam em memória por processo. Se um usuário conecta ao Container 1 e uma atualização de pontuação acontece no Container 3, esse usuário nunca recebe a notificação. Cada funcionalidade em tempo real precisava de uma solução que funcionasse através das fronteiras dos containers.\n\n## Coordenação Redis Pub/Sub\n\nA solução: cada container mantém sua própria tabela de lookup mapeando IDs de usuário para IDs de sessão socket. Quando uma notificação dispara, ela publica em um canal Redis. Cada container recebe a mensagem, verifica \"esse usuário está conectado a mim?\", e só emite se tiver uma conexão ativa. Sem broadcasts desperdiçados, sem gerenciamento de rooms entre containers.\n\n```python\ndef _handle_notification_message(self, message):\n    user_ids = message.get('user_ids', [])\n    event_name = message.get('event_name')\n    data = message.get('data')\n\n    for user_id in user_ids:\n        user_sids = get_user_connections(user_id)\n        for sid in user_sids:\n            self.socketio.emit(event_name, data, to=sid)\n```\n\n## O Bug de Threading do Gunicorn\n\nEm desenvolvimento, tudo funcionava. Em produção com os workers gevent do Gunicorn, a thread subscriber do Redis morria silenciosamente. Dois problemas compostos: o modelo pre-fork do Gunicorn destrói threads iniciadas durante a inicialização da app, e o timing do monkey patching do gevent difere entre dev e prod. A correção foi substituir `threading.Thread` por `socketio.start_background_task()`, que auto-seleciona `gevent.spawn()` no modo gevent. Mudança pequena, horas de debugging para encontrar.\n\n## Abstraindo a Complexidade\n\nO código de domínio não deveria saber sobre Redis ou coordenação de containers. O `NotificationService` expõe métodos simples como `broadcast_attempt_update(event_id, team_id, challenge_id)`. Por baixo ele resolve IDs de usuário, publica no Redis, trata falhas graciosamente. Um colega trabalhando no controller de pontuação só chama o método e segue em frente.\n\n## Middleware Baseado em Decorators\n\nCada endpoint precisa de auth, validação de entrada, carregamento de recursos e verificação de permissões. O padrão que emergiu através de code review e iteração com a equipe: decorators componíveis que empilham de forma limpa.\n\n```python\n@user_endpoint(json_required=True)\n@load_event(LoaderType.PARAM)\n@load_challenge(LoaderType.PARAM)\n@load_question(LoaderType.PARAM)\n@load_team_by_user_and_event()\n@check_permissions(PermissionEnum.CAN_PLAY_CHALLENGES)\ndef post(self, event_id, challenge_id, question_id,\n         event, challenge, question, team, current_user, json_data):\n    return submit_answer(event, challenge, question, team, current_user, json_data)\n```\n\nQuando o handler roda, auth está verificada, JSON está parseado, todos os models estão carregados, permissões estão verificadas. O handler só faz lógica de negócio. Esse padrão se espalhou por todo o backend através de PRs e feedback.\n\n## O Que Aprendi\n\nEssa foi minha primeira vez trabalhando em algo dessa escala com uma equipe real. Os devs seniores, particularmente os que cuidavam de DevOps e orquestração Docker Swarm, me ensinaram como realmente pensar sobre sistemas distribuídos. Os padrões de decorators vieram do feedback de code review. Olhando meus PRs iniciais versus os posteriores, o crescimento é óbvio. Entregar código que outras pessoas precisam manter muda como você escreve.",
+    "responsibilities": null,
+    "achievements": [
+      "Contribuidor #1 (70K+ linhas)",
+      "8 domínios completos construídos",
+      "50+ endpoints de API",
+      "70% da suite de testes",
+      "Coordenação WebSocket multi-container"
+    ],
+    "tech_stack": ["Python", "Flask", "Flask-SocketIO", "Redis", "PostgreSQL", "SQLAlchemy", "AWS SES", "AWS S3", "Docker", "pytest"],
+    "display_order": 1,
+    "is_visible": true
+  },
+  {
+    "language": "pt",
+    "company": "Sealing Technologies",
+    "company_url": "https://sealingtech.com",
+    "company_logo_url": null,
+    "location": "Columbia, MD",
+    "role": "Técnico de Integração II",
+    "department": "Produção",
+    "employment_type": "full_time",
+    "start_date": "2025-05-01",
+    "end_date": "2025-05-01",
+    "is_current": false,
+    "description": "Garantia de qualidade e integração de sistemas para sistemas de defesa customizados, incluindo servidores, switches de rede e Cyber-Fly-Away Kits construídos conforme especificações do cliente. Trabalhei em workflows certificados ISO 9001:2015 para validar hardware antes do deployment para clientes governamentais e de defesa.\n\nO processo de QA envolvia verificar configurações de BIOS, firmware BMC, memória do sistema e métricas de saúde do armazenamento. Testes de stress com Prime95 levavam CPUs aos limites térmicos enquanto monitorava temperaturas e velocidades de ventilador. FIO fazia benchmark de I/O de armazenamento para confirmar que os drives aguentavam operações de escrita sustentadas sem degradação. Placas de interface de rede eram validadas para o throughput esperado. Cada sistema passava por verificações documentadas antes do envio.\n\nAlém do QA hands-on, escrevi blogs técnicos para o site da empresa explicando nossos processos de montagem e teste, e desenvolvi SOPs para padronizar procedimentos entre equipes e agilizar a integração de novos técnicos.",
+    "responsibilities": null,
+    "achievements": [
+      "Consultei em $40M+ de hardware servidor/rede",
+      "Conformidade ISO 9001:2015",
+      "Escrevi blogs técnicos da empresa",
+      "Desenvolvi SOPs da equipe"
+    ],
+    "tech_stack": ["RHEL", "SELinux", "Prime95", "FIO", "BMC/BIOS", "Hardware Diagnostics"],
+    "display_order": 2,
+    "is_visible": true
+  },
+  {
+    "language": "pt",
+    "company": "Jimmy John's",
+    "company_url": null,
+    "company_logo_url": null,
+    "location": "Severna Park, MD",
+    "role": "Gerente Geral",
+    "department": null,
+    "employment_type": "full_time",
+    "start_date": "2022-12-01",
+    "end_date": "2025-06-01",
+    "is_current": false,
+    "description": "Antes de tech, eu comandava um restaurante de alto volume. Gerenciei uma equipe de 10+, cuidei das operações diárias, otimizei workflows para cortar custos de mão de obra, e consistentemente atingi metas de performance. Me tornei o GM com melhor desempenho em uma franquia de 5 lojas. O trabalho me ensinou como liderar sob pressão, priorizar quando tudo parece urgente, e assumir responsabilidade pelos resultados. Indústria diferente, mesmos fundamentos.",
+    "responsibilities": null,
+    "achievements": [
+      "GM com melhor desempenho",
+      "Gerenciei 10+ funcionários",
+      "Reduzi tempos de entrega em 8 min/semana"
+    ],
+    "tech_stack": null,
+    "display_order": 3,
+    "is_visible": true
+  }
+]

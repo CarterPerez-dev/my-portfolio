@@ -63,11 +63,7 @@ class AuthService:
             raise InvalidCredentials()
 
         if new_hash:
-            await UserRepository.update_password(
-                self.session,
-                user,
-                new_hash
-            )
+            await UserRepository.update_password(self.session, user, new_hash)
 
         access_token = create_access_token(user.id, user.token_version)
 
@@ -119,7 +115,8 @@ class AuthService:
         device_id: str | None = None,
         device_name: str | None = None,
         ip_address: str | None = None,
-    ) -> tuple[TokenResponse, str]:
+    ) -> tuple[TokenResponse,
+               str]:
         """
         Refresh access token using refresh token
 
@@ -151,10 +148,7 @@ class AuthService:
         if user is None or not user.is_active:
             raise TokenError(message = "User not found or inactive")
 
-        await RefreshTokenRepository.revoke_token(
-            self.session,
-            stored_token
-        )
+        await RefreshTokenRepository.revoke_token(self.session, stored_token)
 
         access_token = create_access_token(user.id, user.token_version)
 

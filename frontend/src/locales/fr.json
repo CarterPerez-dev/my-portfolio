@@ -1,0 +1,100 @@
+{
+  "common": {
+    "search": "Rechercher",
+    "searchPlaceholder": "Rechercher...",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "notFound": "Non trouvé",
+    "goBack": "Retour",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "viewAll": "Voir tout",
+    "readMore": "Lire la suite",
+    "externalLink": "Ouvre dans un nouvel onglet"
+  },
+  "nav": {
+    "gettingStarted": "Démarrage",
+    "overview": "Aperçu",
+    "quickStart": "Démarrage Rapide",
+    "projects": "Projets",
+    "background": "Parcours",
+    "experience": "Expérience",
+    "certifications": "Certifications",
+    "writing": "Articles",
+    "onThisPage": "SUR CETTE PAGE"
+  },
+  "version": {
+    "stable": "stable",
+    "latest": "dernière",
+    "github": "GitHub",
+    "resume": "CV",
+    "contact": "Contact"
+  },
+  "search": {
+    "title": "Résultats de Recherche",
+    "found": "Recherche terminée, {{count}} page trouvée.",
+    "found_plural": "Recherche terminée, {{count}} pages trouvées.",
+    "noResults": "Aucun résultat pour \"{{query}}\"",
+    "tryAgain": "Essayez un autre terme de recherche"
+  },
+  "overview": {
+    "title": "Aperçu",
+    "badges": {
+      "projects": "PROJETS",
+      "commits": "COMMITS",
+      "certs": "CERTS"
+    }
+  },
+  "quickStart": {
+    "title": "Démarrage Rapide",
+    "description": "Liens rapides pour me contacter et en savoir plus"
+  },
+  "projects": {
+    "title": "Projets",
+    "technicalDetails": "Détails Techniques",
+    "techStack": "Stack Technique",
+    "links": "Liens",
+    "viewSource": "Voir le Code",
+    "liveDemo": "Démo en Direct",
+    "documentation": "Documentation",
+    "status": {
+      "active": "Actif",
+      "maintained": "Maintenu",
+      "archived": "Archivé",
+      "deprecated": "Obsolète"
+    }
+  },
+  "experience": {
+    "title": "Expérience",
+    "present": "Présent",
+    "employmentType": {
+      "full_time": "Temps Plein",
+      "part_time": "Temps Partiel",
+      "contract": "Contrat",
+      "freelance": "Freelance",
+      "internship": "Stage"
+    }
+  },
+  "certifications": {
+    "title": "Certifications",
+    "obtained": "Obtenu",
+    "expires": "Expire",
+    "expired": "Expiré",
+    "noExpiry": "Sans expiration",
+    "verify": "Vérifier",
+    "category": {
+      "security": "Sécurité",
+      "cloud": "Cloud",
+      "programming": "Programmation",
+      "networking": "Réseaux",
+      "database": "Base de Données",
+      "devops": "DevOps"
+    }
+  },
+  "errors": {
+    "pageNotFound": "Page non trouvée",
+    "pageNotFoundDesc": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "somethingWentWrong": "Une erreur est survenue",
+    "tryAgain": "Réessayer"
+  }
+}

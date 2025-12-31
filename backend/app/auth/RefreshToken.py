@@ -21,12 +21,7 @@ from sqlalchemy.orm import (
     relationship,
 )
 
-from config import (
-    DEVICE_ID_MAX_LENGTH,
-    DEVICE_NAME_MAX_LENGTH,
-    IP_ADDRESS_MAX_LENGTH,
-    TOKEN_HASH_LENGTH,
-)
+import config
 from core.Base import (
     Base,
     TimestampMixin,
@@ -47,7 +42,7 @@ class RefreshToken(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "refresh_tokens"
 
     token_hash: Mapped[str] = mapped_column(
-        String(TOKEN_HASH_LENGTH),
+        String(config.TOKEN_HASH_LENGTH),
         unique = True,
         index = True,
     )
@@ -64,15 +59,15 @@ class RefreshToken(Base, UUIDMixin, TimestampMixin):
     )
 
     device_id: Mapped[str | None] = mapped_column(
-        String(DEVICE_ID_MAX_LENGTH),
+        String(config.DEVICE_ID_MAX_LENGTH),
         default = None,
     )
     device_name: Mapped[str | None] = mapped_column(
-        String(DEVICE_NAME_MAX_LENGTH),
+        String(config.DEVICE_NAME_MAX_LENGTH),
         default = None,
     )
     ip_address: Mapped[str | None] = mapped_column(
-        String(IP_ADDRESS_MAX_LENGTH),
+        String(config.IP_ADDRESS_MAX_LENGTH),
         default = None,
     )
 

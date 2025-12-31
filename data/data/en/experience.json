@@ -1,0 +1,74 @@
+[
+  {
+    "language": "en",
+    "company": "Cyber Skyline",
+    "company_url": "https://cyberskyline.com",
+    "company_logo_url": null,
+    "location": "Remote",
+    "role": "Software Engineer",
+    "department": "Backend",
+    "employment_type": "FULL_TIME",
+    "start_date": "2025-05-01",
+    "end_date": null,
+    "is_current": true,
+    "description": "Backend engineer for CISA's annual President's Cup CTF Competition platform. Joined a 7-person team and became the primary backend contributor, building core competition infrastructure including the scoring engine, real-time notification system, support ticketing, and team/event management.\n\n## The Multi-Container Problem\n\nThe platform runs multiple Flask containers behind a load balancer on Docker Swarm. Standard WebSocket implementations break in this setup because Flask-SocketIO rooms are in-memory per process. If a user connects to Container 1 and a score update happens on Container 3, that user never gets the notification. Every real-time feature needed a solution that worked across container boundaries.\n\n## Redis Pub/Sub Coordination\n\nThe solution: each container maintains its own lookup table mapping user IDs to socket session IDs. When a notification fires, it publishes to a Redis channel. Every container receives the message, checks \"is this user connected to me?\", and only emits if they have an active connection. No wasted broadcasts, no cross container room management.\n\n```python\ndef _handle_notification_message(self, message):\n    user_ids = message.get('user_ids', [])\n    event_name = message.get('event_name')\n    data = message.get('data')\n\n    for user_id in user_ids:\n        user_sids = get_user_connections(user_id)\n        for sid in user_sids:\n            self.socketio.emit(event_name, data, to=sid)\n```\n\n## The Gunicorn Threading Bug\n\nIn development, everything worked. In production with Gunicorn's gevent workers, the Redis subscriber thread would silently die. Two compounding issues: Gunicorn's pre-fork model destroys threads started during app initialization, and gevent's monkey patching timing differs between dev and prod. The fix was replacing `threading.Thread` with `socketio.start_background_task()`, which auto-selects `gevent.spawn()` in gevent mode. Small change, hours of debugging to find it.\n\n## Abstracting the Complexity\n\nDomain code shouldn't know about Redis or container coordination. The `NotificationService` exposes simple methods like `broadcast_attempt_update(event_id, team_id, challenge_id)`. Under the hood it resolves user IDs, publishes to Redis, handles failures gracefully. A teammate working on the scoring controller just calls the method and moves on.\n\n## Decorator-Based Middleware\n\nEvery endpoint needs auth, input validation, resource loading, and permission checks. The pattern that emerged through code review and iteration with the team: composable decorators that stack cleanly.\n\n```python\n@user_endpoint(json_required=True)\n@load_event(LoaderType.PARAM)\n@load_challenge(LoaderType.PARAM)\n@load_question(LoaderType.PARAM)\n@load_team_by_user_and_event()\n@check_permissions(PermissionEnum.CAN_PLAY_CHALLENGES)\ndef post(self, event_id, challenge_id, question_id,\n         event, challenge, question, team, current_user, json_data):\n    return submit_answer(event, challenge, question, team, current_user, json_data)\n```\n\nBy the time the handler runs, auth is verified, JSON is parsed, all models are loaded, permissions are checked. The handler just does business logic. This pattern spread across the entire backend through PRs and feedback.\n\n## What I Learned\n\nThis was my first time working on something at this scale with a real team. The senior devs, particularly those handling DevOps and the Docker Swarm orchestration, taught me how to actually think about distributed systems. The decorator patterns came out of code review feedback. Looking at my early PRs versus the later ones, the growth is obvious. Shipping code that other people have to maintain changes how you write it.",
+    "responsibilities": null,
+    "achievements": [
+      "#1 contributor (70K+ lines)",
+      "8 complete domains built",
+      "50+ API endpoints",
+      "70% of test suite",
+      "Multi-container WebSocket coordination"
+    ],
+    "tech_stack": ["Python", "Flask", "Flask-SocketIO", "Redis", "PostgreSQL", "SQLAlchemy", "AWS SES", "AWS S3", "Docker", "pytest"],
+    "display_order": 1,
+    "is_visible": true
+  },
+  {
+    "language": "en",
+    "company": "Sealing Technologies",
+    "company_url": "https://sealingtech.com",
+    "company_logo_url": null,
+    "location": "Columbia, MD",
+    "role": "Integration Tech II",
+    "department": "Production",
+    "employment_type": "FULL_TIME",
+    "start_date": "2025-05-01",
+    "end_date": "2025-05-01",
+    "is_current": false,
+    "description": "Quality assurance and system integration for custom defense systems, including servers, network switches, and Cyber-Fly-Away Kits built to client specifications. Worked within ISO 9001:2015 certified workflows to validate hardware before deployment to government and defense customers.\n\nThe QA process involved verifying BIOS configurations, BMC firmware, system memory, and storage health metrics. Stress testing with Prime95 pushed CPUs to thermal limits while monitoring temperatures and fan speeds. FIO benchmarked storage I/O to confirm drives handled sustained write operations without degradation. Network interface cards were validated for expected throughput. Every system passed through documented checks before shipping.\n\nBeyond hands-on QA, I authored technical blogs for the company website explaining our assembly and testing processes, and developed SOPs to standardize procedures across teams and streamline onboarding for new techs.",
+    "responsibilities": null,
+    "achievements": [
+      "Consulted on $40M+ in server/network hardware",
+      "ISO 9001:2015 compliance",
+      "Authored company technical blogs",
+      "Developed team SOPs"
+    ],
+    "tech_stack": ["RHEL", "SELinux", "Prime95", "FIO", "BMC/BIOS", "Hardware Diagnostics"],
+    "display_order": 2,
+    "is_visible": true
+  },
+  {
+    "language": "en",
+    "company": "Jimmy John's",
+    "company_url": null,
+    "company_logo_url": null,
+    "location": "Severna Park, MD",
+    "role": "General Manager",
+    "department": null,
+    "employment_type": "FULL_TIME",
+    "start_date": "2022-12-01",
+    "end_date": "2025-06-01",
+    "is_current": false,
+    "description": "Before tech, I ran a high-volume restaurant. Managed a team of 10+, handled daily operations, optimized workflows to cut labor costs, and consistently hit performance targets. Became the top-performing GM in a 5-store franchise. The job taught me how to lead under pressure, prioritize when everything feels urgent, and take ownership of outcomes. Different industry, same fundamentals.",
+    "responsibilities": null,
+    "achievements": [
+      "Top-performing GM",
+      "Managed 10+ staff",
+      "Reduced delivery times by 8 min/week"
+    ],
+    "tech_stack": null,
+    "display_order": 3,
+    "is_visible": true
+  }
+]

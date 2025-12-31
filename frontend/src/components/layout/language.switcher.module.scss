@@ -1,0 +1,97 @@
+// ===================
+// © AngelaMos | 2025
+// language.switcher.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.switcher {
+  position: absolute;
+  top: $space-6;
+  right: calc($toc-width + $space-12);
+  z-index: $z-sticky;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+
+  @include breakpoint-down('xl') {
+    right: $space-4;
+  }
+
+  @include breakpoint-down('lg') {
+    top: $space-7;
+  }
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-2;
+  }
+}
+
+.languages {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-1;
+  }
+}
+
+.lang {
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $text-lighter;
+  cursor: pointer;
+  @include transition-fast;
+
+  @include hover {
+    color: $text-default;
+  }
+
+  &.active {
+    color: $accent;
+  }
+}
+
+.separator {
+  margin: 0 $space-1-5;
+  color: $text-muted;
+  font-size: $font-size-xs;
+
+  @media (max-width: 700px) {
+    display: none;
+  }
+}
+
+.tocToggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: $space-1;
+  background: $bg-surface-100;
+  border: 1px solid $border-default;
+  border-radius: $radius-xs;
+  cursor: pointer;
+  @include transition-fast;
+
+  @include hover {
+    background: $bg-surface-200;
+    border-color: $border-strong;
+  }
+
+  @include breakpoint-down('xl') {
+    display: flex;
+  }
+}
+
+.tocIcon {
+  width: 12px;
+  height: 12px;
+  color: $text-light;
+}

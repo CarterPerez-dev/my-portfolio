@@ -1,0 +1,62 @@
+[
+  {
+    "language": "pt",
+    "title": "Construindo Soluções Personalizadas com Qualidade no Centro",
+    "description": "A jornada de um Técnico de Integração de Sistemas na SealingTech, construindo sistemas de defesa personalizados com precisão, desde a seleção de hardware até a garantia de qualidade ISO 9001.",
+    "external_url": "https://www.sealingtech.com/2024/10/03/building-custom-solutions-with-quality-at-the-core/",
+    "category": "project",
+    "tags": ["sealing-tech", "cybersecurity"],
+    "thumbnail_url": null,
+    "published_date": "2024-10-03",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "pt",
+    "title": "Como Meu Crescimento Profissional Melhorou a Experiência do Cliente",
+    "description": "Como as certificações CompTIA e projetos práticos transformaram minha abordagem de resolução de problemas e melhoraram a experiência do cliente na SealingTech.",
+    "external_url": "https://www.sealingtech.com/2025/02/03/how-my-career-growth-led-to-enhancing-customer-experience/",
+    "category": "career",
+    "tags": ["sealing-tech", "cybersecurity"],
+    "thumbnail_url": null,
+    "published_date": "2025-02-03",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "pt",
+    "title": "As 10 Melhores Dicas para Passar no Exame CompTIA Security+ de Primeira",
+    "description": "Dicas e estratégias essenciais para passar no exame de certificação CompTIA Security+ na primeira tentativa, desde técnicas de estudo até gestão do tempo.",
+    "external_url": "https://certgames.com/blog/comptia-security-plus-exam-tips",
+    "category": "tutorial",
+    "tags": ["cybersecurity", "comptia"],
+    "thumbnail_url": null,
+    "published_date": "2024-12-05",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  },
+  {
+    "language": "pt",
+    "title": "Desbloqueie Seus Superpoderes de Aprendizagem: A Ciência e a Arte de Gamificar seus Estudos",
+    "description": "Transforme sua rotina de estudos de uma tarefa chata em uma jornada envolvente aproveitando o poder da gamificação - aprenda a psicologia e as estratégias práticas que fazem o aprendizado durar.",
+    "external_url": "https://medium.com/@carterperez88/unlocking-your-learning-superpowers-the-science-art-of-gamifying-your-studies-and-why-your-2d55338141f9",
+    "category": "deep_dive",
+    "tags": ["learning", "gamified"],
+    "thumbnail_url": null,
+    "published_date": "2025-05-30",
+    "read_time_minutes": null,
+    "views_count": null,
+    "display_order": 0,
+    "is_visible": true,
+    "is_featured": false
+  }
+]

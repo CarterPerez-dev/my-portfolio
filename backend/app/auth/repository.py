@@ -29,9 +29,7 @@ class RefreshTokenRepository(BaseRepository[RefreshToken]):
         Get refresh token by its hash
         """
         result = await session.execute(
-            select(RefreshToken).where(
-                RefreshToken.token_hash == token_hash
-            )
+            select(RefreshToken).where(RefreshToken.token_hash == token_hash)
         )
         return result.scalars().first()
 

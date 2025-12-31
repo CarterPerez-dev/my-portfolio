@@ -30,29 +30,42 @@ ENV VITE_API_URL=${VITE_API_URL} \
 RUN pnpm build
 
 # ============================================================================
-# PRODUCTION STAGE
+# PRODUCTION STAGE - OpenResty with lua-resty-prometheus
 # ============================================================================
-FROM nginx:1.27-alpine AS production
+FROM openresty/openresty:1.27.1.1-0-alpine AS production
 
-RUN rm -rf /usr/share/nginx/html/* && \
-    rm /etc/nginx/conf.d/default.conf
+RUN apk add --no-cache curl
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+RUN mkdir -p /usr/local/openresty/site/lualib && \
+    curl -fsSL https://raw.githubusercontent.com/knyar/nginx-lua-prometheus/0.20240525/prometheus.lua \
+    -o /usr/local/openresty/site/lualib/prometheus.lua && \
+    curl -fsSL https://raw.githubusercontent.com/knyar/nginx-lua-prometheus/0.20240525/prometheus_resty_counter.lua \
+    -o /usr/local/openresty/site/lualib/prometheus_resty_counter.lua && \
+    curl -fsSL https://raw.githubusercontent.com/knyar/nginx-lua-prometheus/0.20240525/prometheus_keys.lua \
+    -o /usr/local/openresty/site/lualib/prometheus_keys.lua
 
-COPY --chown=nginx:nginx infra/nginx/nginx.prod.conf /etc/nginx/nginx.conf
-COPY --chown=nginx:nginx infra/nginx/prod.nginx /etc/nginx/conf.d/default.conf
+RUN rm -rf /usr/local/openresty/nginx/html/* && \
+    rm -f /etc/nginx/conf.d/default.conf
 
-RUN chown -R nginx:nginx /usr/share/nginx/html && \
-    chown -R nginx:nginx /var/cache/nginx && \
-    chown -R nginx:nginx /var/log/nginx && \
-    touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid
+COPY --from=builder /app/dist /usr/local/openresty/nginx/html
 
-USER nginx
+COPY --chmod=644 infra/nginx/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+COPY --chmod=644 infra/nginx/prod.nginx /etc/nginx/conf.d/default.conf
+
+RUN mkdir -p /usr/local/openresty/nginx/client_body_temp \
+             /usr/local/openresty/nginx/proxy_temp \
+             /usr/local/openresty/nginx/fastcgi_temp \
+             /usr/local/openresty/nginx/uwsgi_temp \
+             /usr/local/openresty/nginx/scgi_temp \
+             /var/run/openresty && \
+    chown -R nobody:nobody /usr/local/openresty/nginx && \
+    chown -R nobody:nobody /var/run/openresty
+
+USER nobody
 
 EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:80/health || exit 1
+    CMD curl -fsSL http://localhost:80/health || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]

@@ -1,0 +1,74 @@
+[
+  {
+    "language": "zh",
+    "company": "Cyber Skyline",
+    "company_url": "https://cyberskyline.com",
+    "company_logo_url": null,
+    "location": "远程",
+    "role": "软件工程师",
+    "department": "后端",
+    "employment_type": "full_time",
+    "start_date": "2025-05-01",
+    "end_date": null,
+    "is_current": true,
+    "description": "为CISA年度总统杯CTF竞赛平台担任后端工程师。加入7人团队后成为主要后端贡献者，构建核心竞赛基础设施，包括计分引擎、实时通知系统、支持工单系统以及团队/赛事管理。\n\n## 多容器问题\n\n平台在Docker Swarm上通过负载均衡器运行多个Flask容器。标准WebSocket实现在此设置中会失效，因为Flask-SocketIO的房间是每个进程内存中的。如果用户连接到容器1，而分数更新发生在容器3，该用户永远收不到通知。每个实时功能都需要一个跨容器边界工作的解决方案。\n\n## Redis Pub/Sub协调\n\n解决方案：每个容器维护自己的查找表，映射用户ID到socket会话ID。当通知触发时，它发布到Redis频道。每个容器接收消息，检查这个用户连接到我这里吗？，只有在有活跃连接时才发送。没有浪费的广播，没有跨容器房间管理。\n\n```python\ndef _handle_notification_message(self, message):\n    user_ids = message.get('user_ids', [])\n    event_name = message.get('event_name')\n    data = message.get('data')\n\n    for user_id in user_ids:\n        user_sids = get_user_connections(user_id)\n        for sid in user_sids:\n            self.socketio.emit(event_name, data, to=sid)\n```\n\n## Gunicorn线程Bug\n\n在开发环境中一切正常。在使用Gunicorn的gevent worker的生产环境中，Redis订阅者线程会静默死亡。两个叠加的问题：Gunicorn的pre-fork模型会销毁应用初始化期间启动的线程，gevent的monkey patching时机在开发和生产环境中不同。修复方法是用`socketio.start_background_task()`替换`threading.Thread`，它在gevent模式下自动选择`gevent.spawn()`。小改动，花了几个小时调试才找到。\n\n## 抽象复杂性\n\n领域代码不应该知道Redis或容器协调的存在。`NotificationService`暴露简单的方法如`broadcast_attempt_update(event_id, team_id, challenge_id)`。底层它解析用户ID，发布到Redis，优雅地处理失败。队友在计分控制器上工作时只需调用方法然后继续。\n\n## 基于装饰器的中间件\n\n每个端点都需要认证、输入验证、资源加载和权限检查。通过代码审查和与团队的迭代形成的模式：可组合的装饰器，干净地堆叠。\n\n```python\n@user_endpoint(json_required=True)\n@load_event(LoaderType.PARAM)\n@load_challenge(LoaderType.PARAM)\n@load_question(LoaderType.PARAM)\n@load_team_by_user_and_event()\n@check_permissions(PermissionEnum.CAN_PLAY_CHALLENGES)\ndef post(self, event_id, challenge_id, question_id,\n         event, challenge, question, team, current_user, json_data):\n    return submit_answer(event, challenge, question, team, current_user, json_data)\n```\n\n当处理器运行时，认证已验证，JSON已解析，所有模型已加载，权限已检查。处理器只做业务逻辑。这个模式通过PR和反馈传播到整个后端。\n\n## 我学到了什么\n\n这是我第一次在真正的团队中处理这种规模的项目。高级开发者，特别是处理DevOps和Docker Swarm编排的那些，教会了我如何真正思考分布式系统。装饰器模式来自代码审查反馈。看我早期的PR和后来的对比，成长是显而易见的。发布其他人需要维护的代码改变了你写代码的方式。",
+    "responsibilities": null,
+    "achievements": [
+      "#1贡献者（70K+行代码）",
+      "构建8个完整领域",
+      "50+个API端点",
+      "70%的测试套件",
+      "多容器WebSocket协调"
+    ],
+    "tech_stack": ["Python", "Flask", "Flask-SocketIO", "Redis", "PostgreSQL", "SQLAlchemy", "AWS SES", "AWS S3", "Docker", "pytest"],
+    "display_order": 1,
+    "is_visible": true
+  },
+  {
+    "language": "zh",
+    "company": "Sealing Technologies",
+    "company_url": "https://sealingtech.com",
+    "company_logo_url": null,
+    "location": "Columbia, MD",
+    "role": "集成技术员 II",
+    "department": "生产",
+    "employment_type": "full_time",
+    "start_date": "2025-05-01",
+    "end_date": "2025-05-01",
+    "is_current": false,
+    "description": "为定制国防系统进行质量保证和系统集成，包括服务器、网络交换机和按客户规格构建的Cyber-Fly-Away套件。在ISO 9001:2015认证的工作流程中验证硬件，然后部署给政府和国防客户。\n\nQA流程包括验证BIOS配置、BMC固件、系统内存和存储健康指标。使用Prime95进行压力测试，将CPU推到热极限，同时监控温度和风扇速度。FIO对存储I/O进行基准测试，确认驱动器能够处理持续写入操作而不降级。网络接口卡验证预期吞吐量。每个系统在发货前都要通过文档化的检查。\n\n除了实际的QA工作，我还为公司网站撰写技术博客，解释我们的组装和测试流程，并开发SOP以标准化跨团队的程序并简化新技术人员的入职培训。",
+    "responsibilities": null,
+    "achievements": [
+      "参与咨询价值4000万美元以上的服务器/网络硬件",
+      "ISO 9001:2015合规",
+      "撰写公司技术博客",
+      "开发团队SOP"
+    ],
+    "tech_stack": ["RHEL", "SELinux", "Prime95", "FIO", "BMC/BIOS", "Hardware Diagnostics"],
+    "display_order": 2,
+    "is_visible": true
+  },
+  {
+    "language": "zh",
+    "company": "Jimmy John's",
+    "company_url": null,
+    "company_logo_url": null,
+    "location": "Severna Park, MD",
+    "role": "总经理",
+    "department": null,
+    "employment_type": "full_time",
+    "start_date": "2022-12-01",
+    "end_date": "2025-06-01",
+    "is_current": false,
+    "description": "在进入科技行业之前，我经营一家高客流量的餐厅。管理10人以上的团队，处理日常运营，优化工作流程以降低人工成本，并持续达成绩效目标。成为5店加盟店中表现最好的总经理。这份工作教会了我如何在压力下领导、在一切都感觉紧急时如何优先排序，以及如何对结果负责。不同的行业，相同的基本原则。",
+    "responsibilities": null,
+    "achievements": [
+      "表现最佳的总经理",
+      "管理10+员工",
+      "每周减少配送时间8分钟"
+    ],
+    "tech_stack": null,
+    "display_order": 3,
+    "is_visible": true
+  }
+]

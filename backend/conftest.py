@@ -8,12 +8,14 @@ Test configuration, fixtures, and factories
 import sys
 from pathlib import Path
 
+
 sys.path.insert(0, str(Path(__file__).parent / "app"))
 
 import hashlib
 import secrets
 from datetime import (
     UTC,
+    date,
     datetime,
     timedelta,
 )
@@ -25,12 +27,10 @@ from httpx import (
     AsyncClient,
     ASGITransport,
 )
-import pytest_asyncio
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     create_async_engine,
 )
-from sqlalchemy.pool import StaticPool
 
 from core.security import (
     hash_password,
@@ -42,45 +42,37 @@ from core.database import get_db_session
 from core.Base import Base
 from user.User import User
 from auth.RefreshToken import RefreshToken
+from project.Project import Project
+from experience.Experience import Experience
+from certification.Certification import Certification
+from blog.Blog import Blog
+from config import (
+    Language,
+    ProjectStatus,
+    EmploymentType,
+    CertificationCategory,
+    BlogCategory,
+)
 
 
-@pytest_asyncio.fixture(scope = "session", loop_scope = "session")
-async def test_engine():
-    """
-    Session scoped async engine with in memory SQLite
-    StaticPool keeps single connection so DB persists
-    """
-    engine = create_async_engine(
-        "sqlite+aiosqlite:///:memory:",
-        poolclass = StaticPool,
-        connect_args = {"check_same_thread": False},
-        echo = False,
-    )
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    yield engine
-    await engine.dispose()
+TEST_DATABASE_URL = "postgresql+asyncpg://test:test@localhost:9366/test_db"
 
 
 @pytest.fixture
-async def db_session(test_engine) -> AsyncIterator[AsyncSession]:
+async def db_session() -> AsyncIterator[AsyncSession]:
     """
-    Per test session with transaction rollback for isolation
-    App commits become savepoints that rollback with test
+    Per test session with fresh tables
     """
-    async with test_engine.connect() as conn:
-        await conn.begin()
+    engine = create_async_engine(TEST_DATABASE_URL, echo = False)
 
-        session = AsyncSession(
-            bind = conn,
-            expire_on_commit = False,
-            join_transaction_mode = "create_savepoint",
-        )
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
 
+    async with AsyncSession(engine, expire_on_commit = False) as session:
         yield session
 
-        await session.close()
-        await conn.rollback()
+    await engine.dispose()
 
 
 @pytest.fixture
@@ -282,6 +274,236 @@ async def revoked_refresh_token_pair(
     )
 
 
+class ProjectFactory:
+    """
+    Factory for creating test projects
+    """
+    _counter = 0
+
+    @classmethod
+    async def create(
+        cls,
+        session: AsyncSession,
+        *,
+        slug: str | None = None,
+        language: Language = Language.ENGLISH,
+        title: str | None = None,
+        description: str | None = None,
+        tech_stack: list[str] | None = None,
+        is_featured: bool = False,
+        status: ProjectStatus = ProjectStatus.ACTIVE,
+    ) -> Project:
+        cls._counter += 1
+
+        project = Project(
+            slug = slug or f"test-project-{cls._counter}",
+            language = language,
+            title = title or f"Test Project {cls._counter}",
+            description = description
+            or f"Description for project {cls._counter}",
+            tech_stack = tech_stack or ["Python",
+                                        "FastAPI"],
+            is_featured = is_featured,
+            status = status,
+        )
+        session.add(project)
+        await session.flush()
+        await session.refresh(project)
+        return project
+
+    @classmethod
+    def reset(cls) -> None:
+        cls._counter = 0
+
+
+class ExperienceFactory:
+    """
+    Factory for creating test experiences
+    """
+    _counter = 0
+
+    @classmethod
+    async def create(
+        cls,
+        session: AsyncSession,
+        *,
+        language: Language = Language.ENGLISH,
+        company: str | None = None,
+        role: str | None = None,
+        start_date: date | None = None,
+        end_date: date | None = None,
+        is_current: bool = False,
+        description: str | None = None,
+        employment_type: EmploymentType = EmploymentType.FULL_TIME,
+        is_visible: bool = True,
+    ) -> Experience:
+        cls._counter += 1
+
+        experience = Experience(
+            language = language,
+            company = company or f"Test Company {cls._counter}",
+            role = role or f"Software Engineer {cls._counter}",
+            start_date = start_date or date(2023,
+                                            1,
+                                            1),
+            end_date = end_date,
+            is_current = is_current,
+            description = description
+            or f"Experience description {cls._counter}",
+            employment_type = employment_type,
+            is_visible = is_visible,
+        )
+        session.add(experience)
+        await session.flush()
+        await session.refresh(experience)
+        return experience
+
+    @classmethod
+    def reset(cls) -> None:
+        cls._counter = 0
+
+
+class CertificationFactory:
+    """
+    Factory for creating test certifications
+    """
+    _counter = 0
+
+    @classmethod
+    async def create(
+        cls,
+        session: AsyncSession,
+        *,
+        language: Language = Language.ENGLISH,
+        name: str | None = None,
+        issuer: str | None = None,
+        date_obtained: date | None = None,
+        expiry_date: date | None = None,
+        is_expired: bool = False,
+        category: CertificationCategory = CertificationCategory.CLOUD,
+        is_visible: bool = True,
+    ) -> Certification:
+        cls._counter += 1
+
+        certification = Certification(
+            language = language,
+            name = name or f"Test Certification {cls._counter}",
+            issuer = issuer or f"Test Issuer {cls._counter}",
+            date_obtained = date_obtained or date(2024,
+                                                  1,
+                                                  1),
+            expiry_date = expiry_date,
+            is_expired = is_expired,
+            category = category,
+            is_visible = is_visible,
+        )
+        session.add(certification)
+        await session.flush()
+        await session.refresh(certification)
+        return certification
+
+    @classmethod
+    def reset(cls) -> None:
+        cls._counter = 0
+
+
+class BlogFactory:
+    """
+    Factory for creating test blogs
+    """
+    _counter = 0
+
+    @classmethod
+    async def create(
+        cls,
+        session: AsyncSession,
+        *,
+        language: Language = Language.ENGLISH,
+        title: str | None = None,
+        description: str | None = None,
+        external_url: str | None = None,
+        category: BlogCategory = BlogCategory.TUTORIAL,
+        is_visible: bool = True,
+        is_featured: bool = False,
+    ) -> Blog:
+        cls._counter += 1
+
+        blog = Blog(
+            language = language,
+            title = title or f"Test Blog {cls._counter}",
+            description = description or f"Blog description {cls._counter}",
+            external_url = external_url
+            or f"https://blog.test.com/post-{cls._counter}",
+            category = category,
+            is_visible = is_visible,
+            is_featured = is_featured,
+        )
+        session.add(blog)
+        await session.flush()
+        await session.refresh(blog)
+        return blog
+
+    @classmethod
+    def reset(cls) -> None:
+        cls._counter = 0
+
+
+@pytest.fixture
+async def test_project(db_session: AsyncSession) -> Project:
+    """
+    Standard test project
+    """
+    return await ProjectFactory.create(db_session)
+
+
+@pytest.fixture
+async def featured_project(db_session: AsyncSession) -> Project:
+    """
+    Featured test project
+    """
+    return await ProjectFactory.create(db_session, is_featured = True)
+
+
+@pytest.fixture
+async def test_experience(db_session: AsyncSession) -> Experience:
+    """
+    Standard test experience
+    """
+    return await ExperienceFactory.create(db_session)
+
+
+@pytest.fixture
+async def current_experience(db_session: AsyncSession) -> Experience:
+    """
+    Current ongoing experience
+    """
+    return await ExperienceFactory.create(db_session, is_current = True)
+
+
+@pytest.fixture
+async def test_certification(db_session: AsyncSession) -> Certification:
+    """
+    Standard test certification
+    """
+    return await CertificationFactory.create(db_session)
+
+
+@pytest.fixture
+async def test_blog(db_session: AsyncSession) -> Blog:
+    """
+    Standard test blog
+    """
+    return await BlogFactory.create(db_session)
+
+
+@pytest.fixture
+async def featured_blog(db_session: AsyncSession) -> Blog:
+    """
+    Featured test blog
+    """
+    return await BlogFactory.create(db_session, is_featured = True)
+
+
 @pytest.fixture(autouse = True)
 def reset_factories():
     """
@@ -289,3 +511,7 @@ def reset_factories():
     """
     yield
     UserFactory.reset()
+    ProjectFactory.reset()
+    ExperienceFactory.reset()
+    CertificationFactory.reset()
+    BlogFactory.reset()

@@ -35,11 +35,11 @@ Architecture
 
 ::
 
-    FastAPI  ·  PostgreSQL  ·  Pydantic  ·  JWT
+    FastAPI  ·  PostgreSQL  ·  Pydantic  ·  Redis
     
     React TS  ·  SCSS  ·  Tanstack Query  ·  Zustand
     
-              Nginx  ·  Redis  ·  Docker  
+    Nginx  ·  Docker  ·  Grafana  ·  Prometheus  ·  Lua-OpenResty
 
 Self Hosted
 

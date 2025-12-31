@@ -1,0 +1,98 @@
+// ===================
+// © AngelaMos | 2025
+// search.results.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.container {
+  max-width: 100%;
+}
+
+.title {
+  margin: 0 0 $space-4;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $text-default;
+  line-height: $line-height-tight;
+}
+
+.message {
+  font-size: $font-size-sm;
+  color: $text-lighter;
+}
+
+.meta {
+  margin-bottom: $space-6;
+  font-size: $font-size-sm;
+  color: $text-light;
+}
+
+.query {
+  color: $accent;
+  font-weight: $font-weight-medium;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resultItem {
+  padding-bottom: $space-4;
+  border-bottom: 1px solid $border-muted;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.resultLink {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  text-decoration: none;
+  margin-bottom: $space-2;
+  @include transition-fast;
+
+  @include hover {
+    .resultTitle {
+      color: $accent;
+    }
+  }
+}
+
+.resultTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $text-default;
+  @include transition-fast;
+}
+
+.resultType {
+  flex-shrink: 0;
+  padding: $space-0-5 $space-2;
+  font-size: $font-size-xs;
+  color: $text-muted;
+  text-transform: uppercase;
+  background: $bg-surface-100;
+  border-radius: $radius-xs;
+}
+
+.resultExcerpt {
+  margin: 0;
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  color: $text-light;
+
+  :global(mark) {
+    background: $accent-muted;
+    color: $accent;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+}

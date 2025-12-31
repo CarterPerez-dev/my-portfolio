@@ -1,0 +1,100 @@
+{
+  "common": {
+    "search": "搜索",
+    "searchPlaceholder": "搜索...",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "notFound": "未找到",
+    "goBack": "返回",
+    "previous": "上一页",
+    "next": "下一页",
+    "viewAll": "查看全部",
+    "readMore": "阅读更多",
+    "externalLink": "在新标签页中打开"
+  },
+  "nav": {
+    "gettingStarted": "开始使用",
+    "overview": "概述",
+    "quickStart": "快速开始",
+    "projects": "项目",
+    "background": "背景",
+    "experience": "工作经历",
+    "certifications": "证书",
+    "writing": "文章",
+    "onThisPage": "本页内容"
+  },
+  "version": {
+    "stable": "稳定版",
+    "latest": "最新版",
+    "github": "GitHub",
+    "resume": "简历",
+    "contact": "联系方式"
+  },
+  "search": {
+    "title": "搜索结果",
+    "found": "搜索完成，找到 {{count}} 个匹配页面。",
+    "found_plural": "搜索完成，找到 {{count}} 个匹配页面。",
+    "noResults": "未找到\"{{query}}\"的相关结果",
+    "tryAgain": "请尝试其他搜索词"
+  },
+  "overview": {
+    "title": "概述",
+    "badges": {
+      "projects": "项目",
+      "commits": "提交",
+      "certs": "证书"
+    }
+  },
+  "quickStart": {
+    "title": "快速开始",
+    "description": "快速链接以了解更多"
+  },
+  "projects": {
+    "title": "项目",
+    "technicalDetails": "技术细节",
+    "techStack": "技术栈",
+    "links": "链接",
+    "viewSource": "查看源码",
+    "liveDemo": "在线演示",
+    "documentation": "文档",
+    "status": {
+      "active": "活跃",
+      "maintained": "维护中",
+      "archived": "已归档",
+      "deprecated": "已弃用"
+    }
+  },
+  "experience": {
+    "title": "工作经历",
+    "present": "至今",
+    "employmentType": {
+      "full_time": "全职",
+      "part_time": "兼职",
+      "contract": "合同工",
+      "freelance": "自由职业",
+      "internship": "实习"
+    }
+  },
+  "certifications": {
+    "title": "证书",
+    "obtained": "获得时间",
+    "expires": "到期时间",
+    "expired": "已过期",
+    "noExpiry": "永久有效",
+    "verify": "验证",
+    "category": {
+      "security": "安全",
+      "cloud": "云计算",
+      "programming": "编程",
+      "networking": "网络",
+      "database": "数据库",
+      "devops": "运维"
+    }
+  },
+  "errors": {
+    "pageNotFound": "页面未找到",
+    "pageNotFoundDesc": "您访问的页面不存在或已被移动。",
+    "somethingWentWrong": "出了点问题",
+    "tryAgain": "重试"
+  }
+}

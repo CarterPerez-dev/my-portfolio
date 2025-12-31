@@ -1,0 +1,12 @@
+services:
+  test-db:
+    image: postgres:17-alpine
+    container_name: portfolio_test_db
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test_db
+    ports:
+      - "9366:5432"
+    tmpfs:
+      - /var/lib/postgresql/data

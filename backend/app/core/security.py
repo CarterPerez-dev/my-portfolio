@@ -18,8 +18,8 @@ import jwt
 from fastapi import Response
 from pwdlib import PasswordHash
 
+import config
 from config import (
-    API_PREFIX,
     settings,
     TokenType,
 )
@@ -58,9 +58,7 @@ async def verify_password(plain_password: str,
         return False, None
 
 
-DUMMY_HASH = password_hasher.hash(
-    "dummy_password_for_timing_attack_prevention"
-)
+DUMMY_HASH = password_hasher.hash("dummy_password_for_timing_attack_prevention")
 
 
 async def verify_password_with_timing_safety(
@@ -99,8 +97,7 @@ def create_access_token(
         "type": TokenType.ACCESS.value,
         "token_version": token_version,
         "iat": now,
-        "exp":
-        now + timedelta(minutes = settings.ACCESS_TOKEN_EXPIRE_MINUTES),
+        "exp": now + timedelta(minutes = settings.ACCESS_TOKEN_EXPIRE_MINUTES),
     }
     if extra_claims:
         payload.update(extra_claims)
@@ -145,13 +142,11 @@ def decode_access_token(token: str) -> dict[str, Any]:
         token,
         settings.SECRET_KEY.get_secret_value(),
         algorithms = [settings.JWT_ALGORITHM],
-        options = {
-            "require": ["exp",
-                        "sub",
-                        "iat",
-                        "type",
-                        "token_version"]
-        },
+        options = {"require": ["exp",
+                               "sub",
+                               "iat",
+                               "type",
+                               "token_version"]},
     )
 
 
@@ -180,7 +175,7 @@ def set_refresh_cookie(response: Response, token: str) -> None:
         secure = settings.ENVIRONMENT.value != "development",
         samesite = "strict",
         max_age = settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
-        path = f"{API_PREFIX}/auth",
+        path = f"{config.API_PREFIX}/auth",
     )
 
 
@@ -190,5 +185,5 @@ def clear_refresh_cookie(response: Response) -> None:
     """
     response.delete_cookie(
         key = "refresh_token",
-        path = f"{API_PREFIX}/auth"
+        path = f"{config.API_PREFIX}/auth"
     )

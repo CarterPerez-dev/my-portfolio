@@ -21,6 +21,7 @@ dependencies = [
     "structlog>=24.4.0",
     "gunicorn>=23.0.0",
     "uvicorn[standard]>=0.38.0",
+    "fastapi-rc>=0.1.0",
 ]
 
 [project.optional-dependencies]
@@ -39,6 +40,7 @@ dev = [
     "pylint-per-file-ignores>=3.2.0",
     "ty>=0.0.1a32",
     "pre-commit>=4.2.0",
+    "python-dotenv>=1.2.1",
 ]
 
 [project.urls]
@@ -91,6 +93,8 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["S101", "ARG001"]
+"conftest.py" = ["S101", "S107"]
+"app/core/rate_limit.py" = ["S110"]
 
 [tool.mypy]
 python_version = "3.12"
@@ -118,6 +122,8 @@ module = [
     "pwdlib",
     "slowapi",
     "slowapi.*",
+    "fastapi_rc",
+    "fastapi_rc.*",
 ]
 ignore_missing_imports = true
 
@@ -177,6 +183,12 @@ ignore-paths = [
     "^.venv/.*",
     "^build/.*",
     "^dist/.*",
+    "^tests/.*",
+    "^conftest.py",
+]
+per-file-ignores = [
+    "alembic/env.py:E1101",
+    "app/__main__.py:W0105",
 ]
 
 [tool.pylint.messages_control]
@@ -206,11 +218,6 @@ disable = [
     "W0622",  # redefined-builtin
     "W0718",  # broad-exception-caught (intentional in health/rate-limit)
 ]
-
-[tool.pylint-per-file-ignores]
-"alembic/env.py" = "no-member"
-"conftest.py" = "import-outside-toplevel"
-"app/__main__.py" = "pointless-string-statement"
 
 [tool.pylint.format]
 max-line-length = 95

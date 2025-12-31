@@ -11,8 +11,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+from fastapi_rc import cachemanager
 
-from config import settings, Environment, API_PREFIX
+import config
+from config import settings
 from core.database import sessionmanager
 from core.exceptions import BaseAppException
 from core.logging import configure_logging
@@ -23,6 +25,12 @@ from core.health_routes import router as health_router
 from user.routes import router as user_router
 from auth.routes import router as auth_router
 from admin.routes import router as admin_router
+from project.routes import router as project_router
+from experience.routes import router as experience_router
+from certification.routes import router as certification_router
+from blog.routes import router as blog_router
+from search.routes import router as search_router
+from it_was_never_real import register_psyop_handler
 
 
 @asynccontextmanager
@@ -32,7 +40,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """
     configure_logging()
     sessionmanager.init(str(settings.DATABASE_URL))
+    if settings.REDIS_URL:
+        cachemanager.init(str(settings.REDIS_URL))
     yield
+    if cachemanager.is_available:
+        await cachemanager.close()
     await sessionmanager.close()
 
 
@@ -44,6 +56,26 @@ OPENAPI_TAGS = [
     {
         "name": "health",
         "description": "Health check endpoints"
+    },
+    {
+        "name": "projects",
+        "description": "Portfolio projects"
+    },
+    {
+        "name": "experiences",
+        "description": "Work experience history"
+    },
+    {
+        "name": "certifications",
+        "description": "Professional certifications"
+    },
+    {
+        "name": "blogs",
+        "description": "External blog posts"
+    },
+    {
+        "name": "search",
+        "description": "Full-text search across portfolio content"
     },
     {
         "name": "auth",
@@ -64,8 +96,6 @@ def create_app() -> FastAPI:
     """
     Application factory
     """
-    is_production = settings.ENVIRONMENT == Environment.PRODUCTION
-
     app = FastAPI(
         title = settings.APP_NAME,
         summary = settings.APP_SUMMARY,
@@ -82,10 +112,10 @@ def create_app() -> FastAPI:
         openapi_tags = OPENAPI_TAGS,
         openapi_version = "3.1.0",
         lifespan = lifespan,
-        root_path = "/api" if not is_production else "",
-        openapi_url = None if is_production else "/openapi.json",
-        docs_url = None if is_production else "/docs",
-        redoc_url = None if is_production else "/redoc",
+        root_path = "/api",
+        openapi_url = "/openapi.json",
+        docs_url = "/docs",
+        redoc_url = "/redoc",
     )
 
     app.add_middleware(CorrelationIdMiddleware)
@@ -98,10 +128,8 @@ def create_app() -> FastAPI:
     )
 
     app.state.limiter = limiter
-    app.add_exception_handler(
-        RateLimitExceeded,
-        _rate_limit_exceeded_handler
-    )
+    app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+    register_psyop_handler(app)
 
     @app.exception_handler(BaseAppException)
     async def app_exception_handler(
@@ -122,12 +150,17 @@ def create_app() -> FastAPI:
             name = settings.APP_NAME,
             version = settings.APP_VERSION,
             environment = settings.ENVIRONMENT.value,
-            docs_url = None if is_production else "/docs",
+            docs_url = "/api/docs",
         )
 
     app.include_router(health_router)
-    app.include_router(admin_router, prefix = API_PREFIX)
-    app.include_router(auth_router, prefix = API_PREFIX)
-    app.include_router(user_router, prefix = API_PREFIX)
+    app.include_router(project_router, prefix = config.API_PREFIX)
+    app.include_router(experience_router, prefix = config.API_PREFIX)
+    app.include_router(certification_router, prefix = config.API_PREFIX)
+    app.include_router(blog_router, prefix = config.API_PREFIX)
+    app.include_router(search_router, prefix = config.API_PREFIX)
+    app.include_router(admin_router, prefix = config.API_PREFIX)
+    app.include_router(auth_router, prefix = config.API_PREFIX)
+    app.include_router(user_router, prefix = config.API_PREFIX)
 
     return app

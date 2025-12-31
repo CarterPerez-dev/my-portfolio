@@ -1,0 +1,136 @@
+// ===================
+// © AngelaMos | 2025
+// markdown.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.markdown {
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+  color: $text-light;
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    margin: $space-4 0;
+  }
+
+  strong {
+    color: $text-default;
+    font-weight: $font-weight-semibold;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  ul,
+  ol {
+    margin: $space-4 0;
+    padding-left: $space-6;
+  }
+
+  li {
+    margin: $space-2 0;
+  }
+
+  blockquote {
+    margin: $space-4 0;
+    padding: $space-3 $space-4;
+    border-left: 3px solid $accent;
+    background: $bg-surface-75;
+    border-radius: 0 $radius-sm $radius-sm 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  hr {
+    margin: $space-8 0;
+    border: none;
+    border-top: 1px solid $border-muted;
+  }
+
+  table {
+    width: 100%;
+    margin: $space-4 0;
+    border-collapse: collapse;
+    font-size: $font-size-sm;
+  }
+
+  th,
+  td {
+    padding: $space-2 $space-3;
+    text-align: left;
+    border: 1px solid $border-default;
+  }
+
+  th {
+    background: $bg-surface-100;
+    color: $text-light;
+    font-weight: $font-weight-medium;
+  }
+
+  td {
+    color: $text-lighter;
+  }
+}
+
+.h2 {
+  margin: $space-8 0 $space-4;
+  padding-top: $space-4;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-default;
+  line-height: $line-height-tight;
+  border-top: 1px solid $border-muted;
+
+  &:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+.h3 {
+  margin: $space-6 0 $space-3;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-default;
+  line-height: $line-height-tight;
+}
+
+.inlineCode {
+  padding: $space-0-5 $space-1;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: $font-size-xs;
+  color: $accent;
+  background: $bg-surface-100;
+  border: 1px solid $border-muted;
+  border-radius: $radius-xs;
+}
+
+.link {
+  color: $accent;
+  text-decoration: none;
+  @include transition-fast;
+
+  @include hover {
+    color: $accent-hover;
+    text-decoration: underline;
+  }
+}
+
+.externalIcon {
+  margin-left: $space-1;
+  font-size: $font-size-xs;
+  opacity: 0.7;
+}
