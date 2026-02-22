@@ -18,7 +18,7 @@
   "code_snippet": "@user_endpoint(json_required=True)\n@load_event(LoaderType.PARAM)\n@load_challenge(LoaderType.PARAM)\n@load_question(LoaderType.PARAM)\n@load_team_by_user_and_event()\n@limiter.limit(\"1 per 1 seconds\")\n@check_permissions(PermissionEnum.CAN_PLAY_CHALLENGES, \"You do not have permission to play challenges.\")\ndef post(\n    self,\n    event_id: int,\n    challenge_id: int,\n    question_id: int,\n    event,\n    challenge,\n    question,\n    team,\n    current_user: User,\n    permissions,\n    json_data,\n    **kwargs,\n):\n    result = submit_answer(\n        event=event,\n        challenge=challenge,\n        question=question,\n        team=team,\n        current_user=current_user,\n        submission=json_data.get(\"submission\", \"\"),\n    )\n    return success_response(result, status_code=201)",
   "code_language": "python",
   "code_filename": "https://github.com/CyberSkyline/ctf-ng/blob/development/backend/ng/scoring/routes/user_routes.py",
-  "display_order": 0,
+  "display_order": 3,
   "is_complete": true,
   "is_featured": true,
   "thumbnail_url": null,

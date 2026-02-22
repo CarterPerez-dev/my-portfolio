@@ -1,0 +1,44 @@
+// ===================
+// © AngelaMos | 2025
+// back.to.top.module.scss
+// ===================
+
+@use '@/styles' as *;
+
+.backToTop {
+  display: none;
+  position: fixed;
+  bottom: $space-8;
+  right: $space-6;
+  z-index: $z-sticky;
+  width: 48px;
+  height: 48px;
+  padding: $space-3;
+  background: rgb(0, 0, 0, 40%);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255, 255, 255, 10%);
+  border-radius: $radius-md;
+  cursor: pointer;
+  @include transition-fast;
+
+  @include hover {
+    background: rgb(0, 0, 0, 60%);
+    border-color: rgb(255, 255, 255, 20%);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  @media (width <= 700px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: rgb(255, 255, 255, 70%);
+}

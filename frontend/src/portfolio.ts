@@ -4,8 +4,8 @@
 // ===================
 
 export const PORTFOLIO_STATS = {
-  PROJECTS: 10,
-  COMMITS: '4.5k',
+  PROJECTS: 16,
+  COMMITS: '6k',
   CERTS: 7,
 } as const
 
