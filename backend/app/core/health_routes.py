@@ -7,6 +7,7 @@ from fastapi import (
     APIRouter,
     status,
 )
+from fastapi.responses import PlainTextResponse
 import redis.asyncio as redis
 from sqlalchemy import text
 
@@ -77,3 +78,12 @@ async def health_check_detailed() -> HealthDetailedResponse:
         database = db_status,
         redis = redis_status,
     )
+
+
+@router.get(
+    "/health/sister",
+    response_class = PlainTextResponse,
+    status_code = status.HTTP_200_OK,
+)
+async def hadley_check() -> str:
+    return "Hey Hadley! if you see this response that means I am indeed.... still alive, thanks for asking! Have a nice day! ❤️"

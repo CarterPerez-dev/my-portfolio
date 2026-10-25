@@ -108,9 +108,10 @@ $text-light: hsl(0, 0%, 70.6%);
 $text-lighter: hsl(0, 0%, 53.7%);
 $text-muted: hsl(0, 0%, 30.2%);
 
-$accent: hsl(153, 60%, 53%);
-$accent-hover: hsl(153, 60%, 60%);
-$accent-muted: hsla(153, 60%, 53%, 0.15);
+
+$accent: hsl(16, 53%, 50%);
+$accent-hover: hsl(16, 53%, 50%);
+$accent-muted: hsla(16, 53%, 50%, 0.15);
 $accent-ring: hsla(153, 60%, 53%, 0.1);
 
 $error-default: hsl(0, 72%, 51%);
